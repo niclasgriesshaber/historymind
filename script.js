@@ -31,7 +31,7 @@ class HistoryMindApp {
         document.addEventListener('click', (e) => {
             if (e.target.closest('.paper-card')) {
                 e.preventDefault();
-                this.showMainContentPage();
+                this.showHomePage();
             }
         });
     }
@@ -40,41 +40,7 @@ class HistoryMindApp {
         const container = document.querySelector('.container');
         container.innerHTML = `
             <header class="header">
-                <h1 class="site-title">HistoryMind</h1>
-                <p class="site-subtitle">Data Quality Validation for Economic History Papers</p>
-                <div class="breadcrumb">
-                    <span class="breadcrumb-item clickable" onclick="app.showHomePage()">Home</span>
-                </div>
-            </header>
-            
-            <main class="main-content">
-                <div class="paper-card">
-                    <h2 class="paper-title">AI for Historical Dataset Construction:<br>Patent Statistics of the German Empire (1877 - 1918)</h2>
-                    <div class="paper-meta">
-                        <span class="paper-year">2025</span>
-                        <span class="paper-type">Research Paper</span>
-                    </div>
-                </div>
-            </main>
-            
-            <footer class="footer">
-                <p>&copy; 2025 HistoryMind.ai. All rights reserved.</p>
-            </footer>
-        `;
-        this.currentPage = 'home';
-    }
-
-    showMainContentPage() {
-        const container = document.querySelector('.container');
-        container.innerHTML = `
-            <header class="header">
-                <h1 class="site-title">HistoryMind</h1>
-                <p class="site-subtitle">Data Quality Validation for Economic History Papers</p>
-                <div class="breadcrumb">
-                    <span class="breadcrumb-item clickable" onclick="app.showHomePage()">Home</span>
-                    <span class="breadcrumb-separator">›</span>
-                    <span class="breadcrumb-item">AI for Historical Dataset Construction: Patent Statistics of the German Empire (1877 - 1918)</span>
-                </div>
+                <h1 class="site-title">AI for Historical Dataset Construction:<br>Patent Statistics of the German Empire (1877 - 1918)</h1>
             </header>
             
             <main class="main-content">
@@ -107,27 +73,16 @@ class HistoryMindApp {
                     </div>
                 </div>
             </main>
-            
-            <footer class="footer">
-                <p>&copy; 2025 HistoryMind.ai. All rights reserved.</p>
-            </footer>
         `;
-        this.currentPage = 'main';
+        this.currentPage = 'home';
     }
+
 
     showSampledPDFs() {
         const container = document.querySelector('.container');
         container.innerHTML = `
             <header class="header">
-                <h1 class="site-title">HistoryMind</h1>
-                <p class="site-subtitle">Data Quality Validation for Economic History Papers</p>
-                <div class="breadcrumb">
-                    <span class="breadcrumb-item clickable" onclick="app.showHomePage()">Home</span>
-                    <span class="breadcrumb-separator">›</span>
-                    <span class="breadcrumb-item clickable" onclick="app.showMainContentPage()">AI for Historical Dataset Construction: Patent Statistics of the German Empire (1877 - 1918)</span>
-                    <span class="breadcrumb-separator">›</span>
-                    <span class="breadcrumb-item">Sampled PDFs and AI Transcriptions</span>
-                </div>
+                <h1 class="site-title">AI for Historical Dataset Construction:<br>Patent Statistics of the German Empire (1877 - 1918)</h1>
             </header>
             
             <main class="main-content">
@@ -141,10 +96,6 @@ class HistoryMindApp {
                     </div>
                 </div>
             </main>
-            
-            <footer class="footer">
-                <p>&copy; 2025 HistoryMind.ai. All rights reserved.</p>
-            </footer>
         `;
     }
 
@@ -179,15 +130,7 @@ class HistoryMindApp {
         const container = document.querySelector('.container');
         container.innerHTML = `
             <header class="header">
-                <h1 class="site-title">HistoryMind</h1>
-                <p class="site-subtitle">Data Quality Validation for Economic History Papers</p>
-                <div class="breadcrumb">
-                    <span class="breadcrumb-item clickable" onclick="app.showHomePage()">Home</span>
-                    <span class="breadcrumb-separator">›</span>
-                    <span class="breadcrumb-item clickable" onclick="app.showMainContentPage()">AI for Historical Dataset Construction: Patent Statistics of the German Empire (1877 - 1918)</span>
-                    <span class="breadcrumb-separator">›</span>
-                    <span class="breadcrumb-item">Full Dataset</span>
-                </div>
+                <h1 class="site-title">AI for Historical Dataset Construction:<br>Patent Statistics of the German Empire (1877 - 1918)</h1>
             </header>
             
             <main class="main-content">
@@ -205,10 +148,6 @@ class HistoryMindApp {
                     </div>
                 </div>
             </main>
-            
-            <footer class="footer">
-                <p>&copy; 2025 HistoryMind.ai. All rights reserved.</p>
-            </footer>
         `;
         this.currentPage = 'full-dataset';
     }
@@ -217,15 +156,7 @@ class HistoryMindApp {
         const container = document.querySelector('.container');
         container.innerHTML = `
             <header class="header">
-                <h1 class="site-title">HistoryMind</h1>
-                <p class="site-subtitle">Data Quality Validation for Economic History Papers</p>
-                <div class="breadcrumb">
-                    <span class="breadcrumb-item clickable" onclick="app.showHomePage()">Home</span>
-                    <span class="breadcrumb-separator">›</span>
-                    <span class="breadcrumb-item clickable" onclick="app.showMainContentPage()">AI for Historical Dataset Construction: Patent Statistics of the German Empire (1877 - 1918)</span>
-                    <span class="breadcrumb-separator">›</span>
-                    <span class="breadcrumb-item">Patent Entry Extraction</span>
-                </div>
+                <h1 class="site-title">AI for Historical Dataset Construction:<br>Patent Statistics of the German Empire (1877 - 1918)</h1>
             </header>
             
             <main class="main-content">
@@ -245,10 +176,6 @@ class HistoryMindApp {
                     </div>
                 </div>
             </main>
-            
-            <footer class="footer">
-                <p>&copy; 2025 HistoryMind.ai. All rights reserved.</p>
-            </footer>
         `;
     }
 
@@ -339,28 +266,16 @@ class HistoryMindApp {
         const container = document.querySelector('.container');
         container.innerHTML = `
             <header class="header">
-                <h1 class="site-title">HistoryMind</h1>
-                <p class="site-subtitle">Data Quality Validation for Economic History Papers</p>
-                <div class="breadcrumb">
-                    <span class="breadcrumb-item clickable" onclick="app.showHomePage()">Home</span>
-                    <span class="breadcrumb-separator">›</span>
-                    <span class="breadcrumb-item clickable" onclick="app.showMainContentPage()">AI for Historical Dataset Construction: Patent Statistics of the German Empire (1877 - 1918)</span>
-                    <span class="breadcrumb-separator">›</span>
-                    <span class="breadcrumb-item">${title}</span>
-                </div>
+                <h1 class="site-title">AI for Historical Dataset Construction:<br>Patent Statistics of the German Empire (1877 - 1918)</h1>
             </header>
             
             <main class="main-content">
                 <div class="coming-soon">
                     <h2>${title}</h2>
                     <p>This section is coming soon. Check back later for updates!</p>
-                    <button class="back-btn" onclick="app.showMainContentPage()">Back to Papers</button>
+                    <button class="back-btn" onclick="app.showHomePage()">Back to Papers</button>
                 </div>
             </main>
-            
-            <footer class="footer">
-                <p>&copy; 2025 HistoryMind.ai. All rights reserved.</p>
-            </footer>
         `;
     }
 
