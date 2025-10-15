@@ -82,7 +82,7 @@ class HistoryMindApp {
                     <div class="content-items">
                         <div class="content-item clickable" onclick="app.showSampledPDFs()">
                             <span class="item-number">📁</span>
-                            <span class="item-text">Sampled PDFs</span>
+                            <span class="item-text">Sampled PDFs and AI Transcriptions</span>
                         </div>
                         
                         <div class="content-item clickable" onclick="app.showCharacterErrorPage()">
@@ -126,14 +126,14 @@ class HistoryMindApp {
                     <span class="breadcrumb-separator">›</span>
                     <span class="breadcrumb-item clickable" onclick="app.showMainContentPage()">AI for Historical Dataset Construction: Patent Statistics of the German Empire (1877 - 1918)</span>
                     <span class="breadcrumb-separator">›</span>
-                    <span class="breadcrumb-item">Sampled PDFs</span>
+                    <span class="breadcrumb-item">Sampled PDFs and AI Transcriptions</span>
                 </div>
             </header>
             
             <main class="main-content">
                 <div class="pdf-section">
                     <div class="pdf-header">
-                        <h2 class="pdf-section-title">Sampled PDFs</h2>
+                        <h2 class="pdf-section-title">Sampled PDFs and AI Transcriptions</h2>
                         <button class="download-all-btn" onclick="app.downloadAllPDFs()">
                             Download All Sampled PDFs
                         </button>
