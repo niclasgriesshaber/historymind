@@ -208,38 +208,20 @@ class HistoryMindApp {
     showPDFPreview(filename) {
         const container = document.querySelector('.container');
         container.innerHTML = `
-            <header class="header">
-                <h1 class="site-title">HistoryMind</h1>
-                <p class="site-subtitle">Data Quality Validation for Economic History Papers</p>
-                <div class="breadcrumb">
-                    <span class="breadcrumb-item clickable" onclick="app.showHomePage()">Home</span>
-                    <span class="breadcrumb-separator">›</span>
-                    <span class="breadcrumb-item clickable" onclick="app.showMainContentPage()">Research Paper</span>
-                    <span class="breadcrumb-separator">›</span>
-                    <span class="breadcrumb-item clickable" onclick="app.showSampledPDFs()">Sampled PDFs</span>
-                    <span class="breadcrumb-separator">›</span>
-                    <span class="breadcrumb-item">${filename}</span>
-                </div>
-            </header>
-            
-            <main class="main-content">
-                <div class="pdf-viewer-container">
-                    <div class="pdf-header">
-                        <h2 class="pdf-title">${filename}</h2>
-                        <div class="pdf-actions">
-                            <button class="download-btn" onclick="app.downloadPDF('${filename}')">Download PDF</button>
-                            <button class="back-btn" onclick="app.showSampledPDFs()">Back to PDFs</button>
-                        </div>
+            <div class="pdf-fullscreen-container">
+                <div class="pdf-controls">
+                    <div class="pdf-info">
+                        <span class="pdf-filename">${filename}</span>
                     </div>
-                    <div class="pdf-preview-container">
-                        <iframe src="data/sampled_pdfs/${filename}#page=1&view=FitH" class="pdf-preview" type="application/pdf"></iframe>
+                    <div class="pdf-actions">
+                        <button class="download-btn" onclick="app.downloadPDF('${filename}')">Download PDF</button>
+                        <button class="back-btn" onclick="app.showSampledPDFs()">Back to PDFs</button>
                     </div>
                 </div>
-            </main>
-            
-            <footer class="footer">
-                <p>&copy; 2025 HistoryMind.ai. All rights reserved.</p>
-            </footer>
+                <div class="pdf-fullscreen-viewer">
+                    <iframe src="data/sampled_pdfs/${filename}#page=1&view=FitH" class="pdf-fullscreen-iframe" type="application/pdf"></iframe>
+                </div>
+            </div>
         `;
     }
 
