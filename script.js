@@ -387,9 +387,12 @@ class HistoryMindApp {
                 // Clean up the text but preserve newlines between paragraphs
                 textContent = textContent.trim();
                 
+                // Remove any leading whitespace from the first line
+                textContent = textContent.replace(/^\s+/, '');
+                
                 // Return clean text with preserved newlines and no indentation
                 return `
-                    <div class="llm-transcription-only" style="text-indent: 0 !important; margin: 0 !important; padding: 0.5rem !important; white-space: pre-wrap; font-family: 'Courier New', monospace; line-height: 1.6;">
+                    <div class="llm-transcription-only" style="text-indent: 0 !important; margin: 0 !important; padding: 0.5rem !important; white-space: pre-wrap; font-family: 'Courier New', monospace; line-height: 1.6; text-align: left !important;">
                         ${textContent}
                     </div>
                 `;
@@ -398,7 +401,7 @@ class HistoryMindApp {
         
         // Fallback to plain text if highlighting not found
         return `
-            <div class="llm-transcription-only" style="text-indent: 0 !important; margin: 0 !important; padding: 0.5rem !important; white-space: pre-wrap; font-family: 'Courier New', monospace; line-height: 1.6;">
+            <div class="llm-transcription-only" style="text-indent: 0 !important; margin: 0 !important; padding: 0.5rem !important; white-space: pre-wrap; font-family: 'Courier New', monospace; line-height: 1.6; text-align: left !important;">
                 ${llmContent}
             </div>
         `;
