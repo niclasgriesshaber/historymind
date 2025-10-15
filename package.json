@@ -1,0 +1,14 @@
+{
+  "name": "historymind",
+  "version": "1.0.0",
+  "description": "HistoryMind - Papers and Data for Economic Historians",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "serve": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 8000"
+  },
+  "keywords": ["history", "economics", "research", "papers"],
+  "author": "HistoryMind",
+  "license": "MIT"
+}

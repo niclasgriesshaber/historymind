@@ -1,0 +1,290 @@
+// HistoryMind Navigation System
+class HistoryMindApp {
+    constructor() {
+        this.currentPage = 'home';
+        this.pdfFiles = [
+            'Patentamt_1877_sampled.pdf', 'Patentamt_1878_sampled.pdf', 'Patentamt_1879_sampled.pdf',
+            'Patentamt_1880_sampled.pdf', 'Patentamt_1881_sampled.pdf', 'Patentamt_1882_sampled.pdf',
+            'Patentamt_1883_sampled.pdf', 'Patentamt_1884_sampled.pdf', 'Patentamt_1885_sampled.pdf',
+            'Patentamt_1886_sampled.pdf', 'Patentamt_1887_sampled.pdf', 'Patentamt_1888_sampled.pdf',
+            'Patentamt_1889_sampled.pdf', 'Patentamt_1890_sampled.pdf', 'Patentamt_1891_sampled.pdf',
+            'Patentamt_1892_sampled.pdf', 'Patentamt_1893_sampled.pdf', 'Patentamt_1894_sampled.pdf',
+            'Patentamt_1895_sampled.pdf', 'Patentamt_1896_sampled.pdf', 'Patentamt_1897_sampled.pdf',
+            'Patentamt_1898_sampled.pdf', 'Patentamt_1899_sampled.pdf', 'Patentamt_1900_sampled.pdf',
+            'Patentamt_1901_sampled.pdf', 'Patentamt_1902_sampled.pdf', 'Patentamt_1903_sampled.pdf',
+            'Patentamt_1904_sampled.pdf', 'Patentamt_1905_sampled.pdf', 'Patentamt_1906_sampled.pdf',
+            'Patentamt_1907_sampled.pdf', 'Patentamt_1908_sampled.pdf', 'Patentamt_1909_sampled.pdf',
+            'Patentamt_1910_sampled.pdf', 'Patentamt_1911_sampled.pdf', 'Patentamt_1912_sampled.pdf',
+            'Patentamt_1913_sampled.pdf', 'Patentamt_1914_sampled.pdf', 'Patentamt_1915_sampled.pdf',
+            'Patentamt_1916_sampled.pdf', 'Patentamt_1917_sampled.pdf', 'Patentamt_1918_sampled.pdf'
+        ];
+        this.init();
+    }
+
+    init() {
+        this.bindEvents();
+        this.showHomePage();
+    }
+
+    bindEvents() {
+        // Paper card click
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.paper-card')) {
+                e.preventDefault();
+                this.showMainContentPage();
+            }
+        });
+    }
+
+    showHomePage() {
+        const container = document.querySelector('.container');
+        container.innerHTML = `
+            <header class="header">
+                <h1 class="site-title">HistoryMind</h1>
+                <p class="site-subtitle">Data Quality Validation for Economic History Papers</p>
+            </header>
+            
+            <main class="main-content">
+                <div class="paper-card">
+                    <h2 class="paper-title">AI for Historical Dataset Construction:<br>Patent Statistics of the German Empire (1877 - 1918)</h2>
+                    <div class="paper-meta">
+                        <span class="paper-year">2025</span>
+                        <span class="paper-type">Research Paper</span>
+                    </div>
+                </div>
+            </main>
+            
+            <footer class="footer">
+                <p>&copy; 2025 HistoryMind.ai. All rights reserved.</p>
+            </footer>
+        `;
+        this.currentPage = 'home';
+    }
+
+    showMainContentPage() {
+        const container = document.querySelector('.container');
+        container.innerHTML = `
+            <header class="header">
+                <h1 class="site-title">HistoryMind</h1>
+                <p class="site-subtitle">Data Quality Validation for Economic History Papers</p>
+                <div class="breadcrumb">
+                    <span class="breadcrumb-item clickable" onclick="app.showHomePage()">Home</span>
+                    <span class="breadcrumb-separator">›</span>
+                    <span class="breadcrumb-item">AI for Historical Dataset Construction: Patent Statistics of the German Empire (1877 - 1918)</span>
+                </div>
+            </header>
+            
+            <main class="main-content">
+                <div class="content-page">
+                    <div class="content-items">
+                        <div class="content-item clickable" onclick="app.showSampledPDFs()">
+                            <span class="item-number">📁</span>
+                            <span class="item-text">Sampled PDFs</span>
+                        </div>
+                        
+                        <div class="content-item clickable" onclick="app.showCharacterErrorPage()">
+                            <span class="item-number">1.</span>
+                            <span class="item-text">Character Error Rate</span>
+                        </div>
+                        
+                        <div class="content-item clickable" onclick="app.showPatentExtractionPage()">
+                            <span class="item-number">2.</span>
+                            <span class="item-text">Patent Entry Extraction based on Archival Image Scans</span>
+                        </div>
+                        
+                        <div class="content-item clickable" onclick="app.showVariableExtractionPage()">
+                            <span class="item-number">3.</span>
+                            <span class="item-text">Variable Extraction based on extracted Patent Entries</span>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            
+            <footer class="footer">
+                <p>&copy; 2025 HistoryMind.ai. All rights reserved.</p>
+            </footer>
+        `;
+        this.currentPage = 'main';
+    }
+
+    showSampledPDFs() {
+        const container = document.querySelector('.container');
+        container.innerHTML = `
+            <header class="header">
+                <h1 class="site-title">HistoryMind</h1>
+                <p class="site-subtitle">Data Quality Validation for Economic History Papers</p>
+                <div class="breadcrumb">
+                    <span class="breadcrumb-item clickable" onclick="app.showHomePage()">Home</span>
+                    <span class="breadcrumb-separator">›</span>
+                    <span class="breadcrumb-item clickable" onclick="app.showMainContentPage()">Research Paper</span>
+                    <span class="breadcrumb-separator">›</span>
+                    <span class="breadcrumb-item">Sampled PDFs</span>
+                </div>
+            </header>
+            
+            <main class="main-content">
+                <div class="pdf-section">
+                    <div class="pdf-header">
+                        <h2 class="pdf-section-title">Sampled PDFs</h2>
+                        <button class="download-all-btn" onclick="app.downloadAllPDFs()">
+                            Download All Sampled PDFs
+                        </button>
+                    </div>
+                    
+                    <div class="pdf-grid" id="pdfGrid">
+                        ${this.generatePDFTiles()}
+                    </div>
+                </div>
+            </main>
+            
+            <footer class="footer">
+                <p>&copy; 2025 HistoryMind.ai. All rights reserved.</p>
+            </footer>
+        `;
+    }
+
+    generatePDFTiles() {
+        return this.pdfFiles.map(filename => {
+            const year = filename.match(/Patentamt_(\d{4})_sampled\.pdf/)[1];
+            return `
+                <div class="pdf-tile clickable" onclick="app.showPDFPreview('${filename}')">
+                    <div class="pdf-icon">📄</div>
+                    <div class="pdf-year">${year}</div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    showCharacterErrorPage() {
+        window.location.href = 'data/character_error_rate.html';
+    }
+
+    showVariableExtractionPage() {
+        window.location.href = 'data/variable_extraction_report.html';
+    }
+
+    showPatentExtractionPage() {
+        const container = document.querySelector('.container');
+        container.innerHTML = `
+            <header class="header">
+                <h1 class="site-title">HistoryMind</h1>
+                <p class="site-subtitle">Data Quality Validation for Economic History Papers</p>
+                <div class="breadcrumb">
+                    <span class="breadcrumb-item clickable" onclick="app.showHomePage()">Home</span>
+                    <span class="breadcrumb-separator">›</span>
+                    <span class="breadcrumb-item clickable" onclick="app.showMainContentPage()">Research Paper</span>
+                    <span class="breadcrumb-separator">›</span>
+                    <span class="breadcrumb-item">Patent Entry Extraction</span>
+                </div>
+            </header>
+            
+            <main class="main-content">
+                <div class="content-page">
+                    <h2 class="content-title">Patent Entry Extraction based on Archival Image Scans</h2>
+                    
+                    <div class="content-items">
+                        <div class="content-item clickable" onclick="app.showComingSoon('Patent Entry Matching before Repairing Page Breaks')">
+                            <span class="item-number">a.</span>
+                            <span class="item-text">Patent Entry Matching before Repairing Page Breaks</span>
+                        </div>
+                        
+                        <div class="content-item clickable" onclick="app.showComingSoon('Patent Entry Matching after Repairing Page Breaks')">
+                            <span class="item-number">b.</span>
+                            <span class="item-text">Patent Entry Matching after Repairing Page Breaks</span>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            
+            <footer class="footer">
+                <p>&copy; 2025 HistoryMind.ai. All rights reserved.</p>
+            </footer>
+        `;
+    }
+
+
+    showPDFPreview(filename) {
+        const container = document.querySelector('.container');
+        container.innerHTML = `
+            <header class="header">
+                <h1 class="site-title">HistoryMind</h1>
+                <p class="site-subtitle">Data Quality Validation for Economic History Papers</p>
+                <div class="breadcrumb">
+                    <span class="breadcrumb-item clickable" onclick="app.showHomePage()">Home</span>
+                    <span class="breadcrumb-separator">›</span>
+                    <span class="breadcrumb-item clickable" onclick="app.showMainContentPage()">Research Paper</span>
+                    <span class="breadcrumb-separator">›</span>
+                    <span class="breadcrumb-item clickable" onclick="app.showSampledPDFs()">Sampled PDFs</span>
+                    <span class="breadcrumb-separator">›</span>
+                    <span class="breadcrumb-item">${filename}</span>
+                </div>
+            </header>
+            
+            <main class="main-content">
+                <div class="pdf-viewer-container">
+                    <div class="pdf-header">
+                        <h2 class="pdf-title">${filename}</h2>
+                        <div class="pdf-actions">
+                            <button class="download-btn" onclick="app.downloadPDF('${filename}')">Download PDF</button>
+                            <button class="back-btn" onclick="app.showSampledPDFs()">Back to PDFs</button>
+                        </div>
+                    </div>
+                    <div class="pdf-preview-container">
+                        <iframe src="data/sampled_pdfs/${filename}#page=1&view=FitH" class="pdf-preview" type="application/pdf"></iframe>
+                    </div>
+                </div>
+            </main>
+            
+            <footer class="footer">
+                <p>&copy; 2025 HistoryMind.ai. All rights reserved.</p>
+            </footer>
+        `;
+    }
+
+    showComingSoon(title) {
+        const container = document.querySelector('.container');
+        container.innerHTML = `
+            <header class="header">
+                <h1 class="site-title">HistoryMind</h1>
+                <p class="site-subtitle">Data Quality Validation for Economic History Papers</p>
+                <div class="breadcrumb">
+                    <span class="breadcrumb-item clickable" onclick="app.showHomePage()">Home</span>
+                    <span class="breadcrumb-separator">›</span>
+                    <span class="breadcrumb-item clickable" onclick="app.showMainContentPage()">Research Paper</span>
+                    <span class="breadcrumb-separator">›</span>
+                    <span class="breadcrumb-item">${title}</span>
+                </div>
+            </header>
+            
+            <main class="main-content">
+                <div class="coming-soon">
+                    <h2>${title}</h2>
+                    <p>This section is coming soon. Check back later for updates!</p>
+                    <button class="back-btn" onclick="app.showMainContentPage()">Back to Papers</button>
+                </div>
+            </main>
+            
+            <footer class="footer">
+                <p>&copy; 2025 HistoryMind.ai. All rights reserved.</p>
+            </footer>
+        `;
+    }
+
+    downloadPDF(filename) {
+        const link = document.createElement('a');
+        link.href = `data/sampled_pdfs/${filename}`;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    downloadAllPDFs() {
+        // Create a zip file or download all PDFs
+        alert('Download all PDFs functionality will be implemented. For now, you can download individual PDFs by clicking on them.');
+    }
+}
+
+// Initialize the app
+const app = new HistoryMindApp();
+
