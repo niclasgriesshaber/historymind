@@ -170,6 +170,14 @@ class HistoryMindApp {
         window.location.href = 'data/variable_extraction_report.html';
     }
 
+    showPatentMatchingBefore() {
+        window.location.href = 'data/patent_entry_matching_before_cleaning.html';
+    }
+
+    showPatentMatchingAfter() {
+        window.location.href = 'data/patent_entry_matching_after_cleaning.html';
+    }
+
     showFullDatasetOptions() {
         const container = document.querySelector('.container');
         container.innerHTML = `
@@ -217,7 +225,7 @@ class HistoryMindApp {
                 <div class="breadcrumb">
                     <span class="breadcrumb-item clickable" onclick="app.showHomePage()">Home</span>
                     <span class="breadcrumb-separator">›</span>
-                    <span class="breadcrumb-item clickable" onclick="app.showMainContentPage()">Research Paper</span>
+                    <span class="breadcrumb-item clickable" onclick="app.showMainContentPage()">AI for Historical Dataset Construction: Patent Statistics of the German Empire (1877 - 1918)</span>
                     <span class="breadcrumb-separator">›</span>
                     <span class="breadcrumb-item">Patent Entry Extraction</span>
                 </div>
@@ -228,12 +236,12 @@ class HistoryMindApp {
                     <h2 class="content-title">Patent Entry Extraction based on Archival Image Scans</h2>
                     
                     <div class="content-items">
-                        <div class="content-item clickable" onclick="app.showComingSoon('Patent Entry Matching before Repairing Page Breaks')">
+                        <div class="content-item clickable" onclick="app.showPatentMatchingBefore()">
                             <span class="item-number">a.</span>
                             <span class="item-text">Patent Entry Matching before Repairing Page Breaks</span>
                         </div>
                         
-                        <div class="content-item clickable" onclick="app.showComingSoon('Patent Entry Matching after Repairing Page Breaks')">
+                        <div class="content-item clickable" onclick="app.showPatentMatchingAfter()">
                             <span class="item-number">b.</span>
                             <span class="item-text">Patent Entry Matching after Repairing Page Breaks</span>
                         </div>
