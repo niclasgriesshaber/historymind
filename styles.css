@@ -730,10 +730,13 @@ body {
     padding: 1rem;
     background: white;
     font-family: 'Courier New', monospace;
-    font-size: 0.875rem;
+    font-size: 1rem;
     line-height: 1.6;
     color: #2d3748;
     white-space: pre-wrap;
+    text-indent: 0;
+    margin-left: 0;
+    padding-left: 1rem;
 }
 
 /* Preserve original highlighting from character_error_rate.html */
