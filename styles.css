@@ -739,28 +739,40 @@ body {
     padding-left: 1rem;
 }
 
+/* Header layout - put controls on same line as heading */
+.llm-side-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.llm-side-header h3 {
+    margin: 0;
+}
+
 /* Font size controls */
 .font-controls {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin-top: 0.5rem;
 }
 
 .font-btn {
-    background: #3182ce;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 0.25rem 0.5rem;
+    background: #edf2f7;
+    color: #4a5568;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    padding: 0.25rem 0.75rem;
     font-size: 0.875rem;
-    font-weight: bold;
+    font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .font-btn:hover {
-    background: #2c5282;
+    background: #e2e8f0;
+    border-color: #a0aec0;
 }
 
 .font-size-display {
@@ -771,16 +783,22 @@ body {
     text-align: center;
 }
 
-/* Force remove any indentation from transcription content */
+/* Aggressively remove indentation from all transcription content */
 .llm-transcription-data {
     text-indent: 0 !important;
     margin-left: 0 !important;
     padding-left: 1rem;
 }
 
-.llm-transcription-data * {
+.llm-transcription-data *,
+.llm-transcription-only *,
+.llm-transcription-only p,
+.llm-transcription-only div,
+.llm-transcription-only pre,
+.llm-transcription-only span {
     text-indent: 0 !important;
     margin-left: 0 !important;
+    padding-left: 0 !important;
 }
 
 /* Preserve original highlighting from character_error_rate.html */
