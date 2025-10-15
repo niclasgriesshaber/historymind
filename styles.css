@@ -264,6 +264,21 @@ body {
     flex: 1;
 }
 
+/* Swapped styling for Full Dataset page */
+.item-number-swapped {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #2d3748;
+    min-width: 2rem;
+}
+
+.item-text-swapped {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #3182ce;
+    flex: 1;
+}
+
 /* PDF Section */
 .pdf-section {
     background: white;

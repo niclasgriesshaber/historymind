@@ -139,13 +139,13 @@ class HistoryMindApp {
                 <div class="content-page">
                     <div class="content-items">
                         <div class="content-item clickable" onclick="app.downloadCSV()">
-                            <span class="item-number">Download</span>
-                            <span class="item-text">CSV</span>
+                            <span class="item-number-swapped">Download</span>
+                            <span class="item-text-swapped">CSV</span>
                         </div>
                         
                         <div class="content-item clickable" onclick="app.downloadXLSX()">
-                            <span class="item-number">Download</span>
-                            <span class="item-text">XLSX</span>
+                            <span class="item-number-swapped">Download</span>
+                            <span class="item-text-swapped">XLSX</span>
                         </div>
                     </div>
                 </div>
