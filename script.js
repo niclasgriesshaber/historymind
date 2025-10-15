@@ -281,9 +281,66 @@ class HistoryMindApp {
         document.body.removeChild(link);
     }
 
-    downloadAllPDFs() {
-        // Create a zip file or download all PDFs
-        alert('Download all PDFs functionality will be implemented. For now, you can download individual PDFs by clicking on them.');
+    async downloadAllPDFs() {
+        try {
+            // Show loading state
+            const button = document.querySelector('.download-all-btn');
+            const originalText = button.textContent;
+            button.textContent = 'Creating ZIP...';
+            button.disabled = true;
+
+            // Create a new JSZip instance
+            const JSZip = window.JSZip || await this.loadJSZip();
+            const zip = new JSZip();
+
+            // Add all PDF files to the zip
+            for (const filename of this.pdfFiles) {
+                try {
+                    const response = await fetch(`data/sampled_pdfs/${filename}`);
+                    if (response.ok) {
+                        const blob = await response.blob();
+                        zip.file(filename, blob);
+                    }
+                } catch (error) {
+                    console.warn(`Failed to load ${filename}:`, error);
+                }
+            }
+
+            // Generate the zip file
+            const zipBlob = await zip.generateAsync({ type: 'blob' });
+            
+            // Create download link
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(zipBlob);
+            link.download = 'HistoryMind_Sampled_PDFs_1877-1918.zip';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+
+            // Reset button
+            button.textContent = originalText;
+            button.disabled = false;
+
+        } catch (error) {
+            console.error('Error creating zip file:', error);
+            alert('Error creating zip file. Please try again or download individual PDFs.');
+            
+            // Reset button
+            const button = document.querySelector('.download-all-btn');
+            button.textContent = 'Download All Sampled PDFs';
+            button.disabled = false;
+        }
+    }
+
+    async loadJSZip() {
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+            script.onload = () => resolve(window.JSZip);
+            script.onerror = () => reject(new Error('Failed to load JSZip library'));
+            document.head.appendChild(script);
+        });
     }
 }
 

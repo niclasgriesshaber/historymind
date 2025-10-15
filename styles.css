@@ -295,6 +295,12 @@ body {
     transform: translateY(-1px);
 }
 
+.download-all-btn:disabled {
+    background: #a0aec0;
+    cursor: not-allowed;
+    transform: none;
+}
+
 .pdf-grid {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
