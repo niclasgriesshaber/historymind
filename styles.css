@@ -62,8 +62,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 220px 0 1rem 0;
-    min-height: calc(100vh - 220px);
+    padding: 250px 0 2rem 0;
+    min-height: calc(100vh - 250px);
 }
 
 .paper-card {
@@ -75,6 +75,7 @@ body {
     width: 100%;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
+    margin-top: 1rem;
 }
 
 .paper-card:hover {
