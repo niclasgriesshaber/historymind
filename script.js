@@ -101,7 +101,7 @@ class HistoryMindApp {
                         </div>
                         
                         <div class="content-item clickable" onclick="app.showFullDatasetOptions()">
-                            <span class="item-number">📊</span>
+                            <span class="item-number">📁</span>
                             <span class="item-text">Full Dataset</span>
                         </div>
                     </div>
@@ -187,16 +187,15 @@ class HistoryMindApp {
             
             <main class="main-content">
                 <div class="content-page">
-                    <h2>Download Full Dataset</h2>
                     <div class="content-items">
                         <div class="content-item clickable" onclick="app.downloadCSV()">
-                            <span class="item-number">📄</span>
-                            <span class="item-text">Download as CSV</span>
+                            <span class="item-number">CSV</span>
+                            <span class="item-text">Download</span>
                         </div>
                         
                         <div class="content-item clickable" onclick="app.downloadXLSX()">
-                            <span class="item-number">📊</span>
-                            <span class="item-text">Download as XLSX</span>
+                            <span class="item-number">XLSX</span>
+                            <span class="item-text">Download</span>
                         </div>
                     </div>
                 </div>
