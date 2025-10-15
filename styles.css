@@ -26,7 +26,7 @@ body {
 /* Header styles */
 .header {
     text-align: center;
-    padding: 1.5rem 0;
+    padding: 2.5rem 0 1.5rem 0;
     position: fixed;
     top: 0;
     left: 0;
@@ -34,10 +34,11 @@ body {
     background: #f8fafc;
     z-index: 1000;
     border-bottom: 2px solid #cbd5e0;
-    min-height: 80px;
+    height: 110px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     width: 100%;
 }
 
@@ -45,9 +46,12 @@ body {
     font-size: 1.5rem;
     font-weight: 600;
     color: #2d3748;
-    margin-bottom: 0.25rem;
-    line-height: 1.4;
+    margin: 0 auto 0.25rem auto;
+    line-height: 1.6;
     text-align: center;
+    letter-spacing: 0.025em;
+    width: 100%;
+    max-width: none;
 }
 
 .site-subtitle {
@@ -263,9 +267,9 @@ body {
 .pdf-section {
     background: white;
     border-radius: 16px;
-    padding: 1.5rem;
+    padding: 2rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 .pdf-header {
@@ -316,13 +320,13 @@ body {
     background: #f7fafc;
     border: 2px solid #e2e8f0;
     border-radius: 12px;
-    padding: 1.5rem;
+    padding: 0.75rem;
     text-align: center;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 80px;
+    aspect-ratio: 1;
     cursor: pointer;
 }
 
@@ -334,8 +338,8 @@ body {
 }
 
 .pdf-year {
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: 1rem;
+    font-weight: 600;
     color: #2d3748;
     text-align: center;
 }
@@ -817,9 +821,9 @@ body {
 }
 
 .pdf-section-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #1a202c;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
     margin: 0;
 }
 
