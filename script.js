@@ -43,7 +43,7 @@ class HistoryMindApp {
                 <h1 class="site-title">HistoryMind</h1>
                 <p class="site-subtitle">Data Quality Validation for Economic History Papers</p>
                 <div class="breadcrumb">
-                    <span class="breadcrumb-item">Home</span>
+                    <span class="breadcrumb-item clickable" onclick="app.showHomePage()">Home</span>
                 </div>
             </header>
             
