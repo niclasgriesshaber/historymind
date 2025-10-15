@@ -337,33 +337,65 @@ class HistoryMindApp {
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
             
-            // Find the section for this specific year
-            const yearSection = doc.querySelector(`section.three-diff-section h2.diff-file-heading:contains("${filename}")`);
-            if (!yearSection) {
-                // Try to find by year pattern
-                const sections = doc.querySelectorAll('section.three-diff-section');
-                let targetSection = null;
-                
-                for (const section of sections) {
-                    const heading = section.querySelector('h2.diff-file-heading');
-                    if (heading && heading.textContent.includes(`Patentamt_${year}_sampled.pdf`)) {
-                        targetSection = section;
-                        break;
-                    }
+            // Find all sections with three-diff-section class
+            const sections = doc.querySelectorAll('section.three-diff-section');
+            let targetSection = null;
+            
+            // Look for the section that matches our filename
+            for (const section of sections) {
+                const heading = section.querySelector('h2.diff-file-heading');
+                if (heading && heading.textContent.includes(filename)) {
+                    targetSection = section;
+                    break;
                 }
-                
-                if (targetSection) {
-                    this.showSideBySideComparison(filename, targetSection.outerHTML);
+            }
+            
+            if (targetSection) {
+                // Extract only the LLM transcription part
+                const llmContainer = targetSection.querySelector('.text-container .llm-header');
+                if (llmContainer) {
+                    // Find the LLM transcription content
+                    const llmContent = llmContainer.parentElement.querySelector('.text-content');
+                    if (llmContent) {
+                        // Create a clean LLM transcription display
+                        const llmData = this.createLLMTranscriptionDisplay(targetSection, llmContent.textContent);
+                        this.showSideBySideComparison(filename, llmData);
+                    } else {
+                        alert(`No LLM transcription content found for ${filename}`);
+                    }
                 } else {
-                    alert(`No LLM transcription data found for ${year}`);
+                    alert(`No LLM transcription section found for ${filename}`);
                 }
             } else {
-                this.showSideBySideComparison(filename, yearSection.closest('section').outerHTML);
+                alert(`No transcription data found for ${filename}`);
             }
         } catch (error) {
             console.error('Error loading comparison data:', error);
             alert('Error loading LLM transcription data');
         }
+    }
+
+    createLLMTranscriptionDisplay(section, llmContent) {
+        // Extract metrics
+        const metricsRow = section.querySelector('.metrics-row');
+        const llmMetric = section.querySelector('.llm-metric');
+        const gapMetric = section.querySelector('.gap-metric');
+        
+        // Get the filename
+        const filename = section.querySelector('h2.diff-file-heading').textContent;
+        
+        return `
+            <div class="llm-transcription-section">
+                <h2 class="llm-filename">${filename}</h2>
+                <div class="llm-metrics">
+                    ${metricsRow ? metricsRow.outerHTML : ''}
+                </div>
+                <div class="llm-content-section">
+                    <h3 class="llm-section-title">LLM-Generated Transcription</h3>
+                    <div class="llm-transcription-text">${llmContent}</div>
+                </div>
+            </div>
+        `;
     }
 
     showSideBySideComparison(filename, llmData) {
