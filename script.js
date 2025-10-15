@@ -316,7 +316,7 @@ class HistoryMindApp {
             // Create download link
             const link = document.createElement('a');
             link.href = URL.createObjectURL(zipBlob);
-            link.download = 'HistoryMind_Sampled_PDFs_1877-1918.zip';
+            link.download = 'HistoryMind_Sampled_PDFs_1878-1918.zip';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
