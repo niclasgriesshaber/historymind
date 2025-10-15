@@ -408,11 +408,11 @@ class HistoryMindApp {
             <div class="comparison-container">
                 <div class="comparison-controls">
                     <div class="comparison-navigation">
-                        <button class="nav-btn prev-btn" ${!prevFile ? 'disabled' : ''} onclick="app.smoothTransition('${prevFile || ''}')" title="Previous PDF">
+                        <button class="nav-btn prev-btn" ${!prevFile ? 'disabled' : ''} onclick="app.smoothComparisonTransition('${prevFile || ''}')" title="Previous PDF">
                             ←
                         </button>
                         <span class="pdf-counter">${currentIndex + 1} of ${this.pdfFiles.length}</span>
-                        <button class="nav-btn next-btn" ${!nextFile ? 'disabled' : ''} onclick="app.smoothTransition('${nextFile || ''}')" title="Next PDF">
+                        <button class="nav-btn next-btn" ${!nextFile ? 'disabled' : ''} onclick="app.smoothComparisonTransition('${nextFile || ''}')" title="Next PDF">
                             →
                         </button>
                     </div>
@@ -445,6 +445,94 @@ class HistoryMindApp {
                 </div>
             </div>
         `;
+    }
+
+    async smoothComparisonTransition(filename) {
+        const iframe = document.querySelector('.comparison-pdf-iframe');
+        const llmContent = document.querySelector('.llm-transcription-data');
+        const filenameSpan = document.querySelector('.comparison-filename');
+        const counterSpan = document.querySelector('.pdf-counter');
+        
+        if (!iframe || !llmContent) return;
+        
+        // Start fade out
+        iframe.style.opacity = '0';
+        llmContent.style.opacity = '0';
+        iframe.style.transition = 'opacity 0.2s ease';
+        llmContent.style.transition = 'opacity 0.2s ease';
+        
+        setTimeout(async () => {
+            try {
+                // Update iframe source
+                iframe.src = `data/sampled_pdfs/${filename}#page=1&view=FitH`;
+                
+                // Update filename and counter
+                const currentIndex = this.pdfFiles.indexOf(filename);
+                filenameSpan.textContent = filename;
+                counterSpan.textContent = `${currentIndex + 1} of ${this.pdfFiles.length}`;
+                
+                // Update navigation buttons
+                const prevFile = currentIndex > 0 ? this.pdfFiles[currentIndex - 1] : null;
+                const nextFile = currentIndex < this.pdfFiles.length - 1 ? this.pdfFiles[currentIndex + 1] : null;
+                
+                const prevBtn = document.querySelector('.prev-btn');
+                const nextBtn = document.querySelector('.next-btn');
+                
+                if (prevBtn) {
+                    prevBtn.disabled = !prevFile;
+                    prevBtn.onclick = prevFile ? () => app.smoothComparisonTransition(prevFile) : null;
+                }
+                
+                if (nextBtn) {
+                    nextBtn.disabled = !nextFile;
+                    nextBtn.onclick = nextFile ? () => app.smoothComparisonTransition(nextFile) : null;
+                }
+                
+                // Load new LLM transcription data
+                const year = filename.match(/Patentamt_(\d{4})_sampled\.pdf/)[1];
+                const response = await fetch('data/character_error_rate.html');
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                const sections = doc.querySelectorAll('section.three-diff-section');
+                let targetSection = null;
+                
+                for (const section of sections) {
+                    const heading = section.querySelector('h2.diff-file-heading');
+                    if (heading && heading.textContent.includes(filename)) {
+                        targetSection = section;
+                        break;
+                    }
+                }
+                
+                if (targetSection) {
+                    const llmContainer = targetSection.querySelector('.text-container .llm-header');
+                    if (llmContainer) {
+                        const llmTextContainer = llmContainer.parentElement.querySelector('.text-content');
+                        if (llmTextContainer) {
+                            llmContent.innerHTML = `
+                                <div class="llm-transcription-only">
+                                    ${llmTextContainer.innerHTML}
+                                </div>
+                            `;
+                        }
+                    }
+                }
+                
+                // Fade back in
+                setTimeout(() => {
+                    iframe.style.opacity = '1';
+                    llmContent.style.opacity = '1';
+                }, 100);
+                
+            } catch (error) {
+                console.error('Error updating comparison:', error);
+                // Reset opacity even on error
+                iframe.style.opacity = '1';
+                llmContent.style.opacity = '1';
+            }
+        }, 200);
     }
 
     async downloadAllPDFs() {
