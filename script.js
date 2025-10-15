@@ -215,11 +215,11 @@ class HistoryMindApp {
             <div class="pdf-fullscreen-container">
                 <div class="pdf-controls">
                     <div class="pdf-navigation">
-                        <button class="nav-btn prev-btn" ${!prevFile ? 'disabled' : ''} onclick="app.showPDFPreview('${prevFile || ''}')" title="Previous PDF">
+                        <button class="nav-btn prev-btn" ${!prevFile ? 'disabled' : ''} onclick="app.smoothTransition('${prevFile || ''}')" title="Previous PDF">
                             ←
                         </button>
                         <span class="pdf-counter">${currentIndex + 1} of ${this.pdfFiles.length}</span>
-                        <button class="nav-btn next-btn" ${!nextFile ? 'disabled' : ''} onclick="app.showPDFPreview('${nextFile || ''}')" title="Next PDF">
+                        <button class="nav-btn next-btn" ${!nextFile ? 'disabled' : ''} onclick="app.smoothTransition('${nextFile || ''}')" title="Next PDF">
                             →
                         </button>
                     </div>
@@ -237,6 +237,50 @@ class HistoryMindApp {
                 </div>
             </div>
         `;
+    }
+
+    smoothTransition(filename) {
+        const iframe = document.querySelector('.pdf-fullscreen-iframe');
+        const filenameSpan = document.querySelector('.pdf-filename');
+        const counterSpan = document.querySelector('.pdf-counter');
+        
+        if (!iframe) return;
+        
+        // Start fade out
+        iframe.style.opacity = '0';
+        iframe.style.transition = 'opacity 0.2s ease';
+        
+        setTimeout(() => {
+            // Update iframe source
+            iframe.src = `data/sampled_pdfs/${filename}#page=1&view=FitH`;
+            
+            // Update filename and counter
+            const currentIndex = this.pdfFiles.indexOf(filename);
+            filenameSpan.textContent = filename;
+            counterSpan.textContent = `${currentIndex + 1} of ${this.pdfFiles.length}`;
+            
+            // Update navigation buttons
+            const prevFile = currentIndex > 0 ? this.pdfFiles[currentIndex - 1] : null;
+            const nextFile = currentIndex < this.pdfFiles.length - 1 ? this.pdfFiles[currentIndex + 1] : null;
+            
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
+            
+            if (prevBtn) {
+                prevBtn.disabled = !prevFile;
+                prevBtn.onclick = prevFile ? () => app.smoothTransition(prevFile) : null;
+            }
+            
+            if (nextBtn) {
+                nextBtn.disabled = !nextFile;
+                nextBtn.onclick = nextFile ? () => app.smoothTransition(nextFile) : null;
+            }
+            
+            // Fade back in
+            setTimeout(() => {
+                iframe.style.opacity = '1';
+            }, 100);
+        }, 200);
     }
 
     showComingSoon(title) {
