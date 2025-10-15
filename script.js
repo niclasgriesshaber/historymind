@@ -541,25 +541,25 @@ class HistoryMindApp {
     }
 
     increaseFontSize() {
-        const transcriptionData = document.querySelector('.llm-transcription-data');
+        const transcriptionOnly = document.querySelector('.llm-transcription-only');
         const sizeDisplay = document.querySelector('.font-size-display');
         
-        if (transcriptionData && sizeDisplay) {
+        if (transcriptionOnly && sizeDisplay) {
             const currentSize = parseInt(sizeDisplay.textContent);
             const newSize = Math.min(currentSize + 10, 150); // Max 150%
-            transcriptionData.style.fontSize = `${newSize}%`;
+            transcriptionOnly.style.fontSize = `${newSize}%`;
             sizeDisplay.textContent = `${newSize}%`;
         }
     }
 
     decreaseFontSize() {
-        const transcriptionData = document.querySelector('.llm-transcription-data');
+        const transcriptionOnly = document.querySelector('.llm-transcription-only');
         const sizeDisplay = document.querySelector('.font-size-display');
         
-        if (transcriptionData && sizeDisplay) {
+        if (transcriptionOnly && sizeDisplay) {
             const currentSize = parseInt(sizeDisplay.textContent);
             const newSize = Math.max(currentSize - 10, 70); // Min 70%
-            transcriptionData.style.fontSize = `${newSize}%`;
+            transcriptionOnly.style.fontSize = `${newSize}%`;
             sizeDisplay.textContent = `${newSize}%`;
         }
     }
