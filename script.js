@@ -124,7 +124,7 @@ class HistoryMindApp {
                 <div class="breadcrumb">
                     <span class="breadcrumb-item clickable" onclick="app.showHomePage()">Home</span>
                     <span class="breadcrumb-separator">›</span>
-                    <span class="breadcrumb-item clickable" onclick="app.showMainContentPage()">Research Paper</span>
+                    <span class="breadcrumb-item clickable" onclick="app.showMainContentPage()">AI for Historical Dataset Construction: Patent Statistics of the German Empire (1877 - 1918)</span>
                     <span class="breadcrumb-separator">›</span>
                     <span class="breadcrumb-item">Sampled PDFs</span>
                 </div>
@@ -335,7 +335,7 @@ class HistoryMindApp {
                 <div class="breadcrumb">
                     <span class="breadcrumb-item clickable" onclick="app.showHomePage()">Home</span>
                     <span class="breadcrumb-separator">›</span>
-                    <span class="breadcrumb-item clickable" onclick="app.showMainContentPage()">Research Paper</span>
+                    <span class="breadcrumb-item clickable" onclick="app.showMainContentPage()">AI for Historical Dataset Construction: Patent Statistics of the German Empire (1877 - 1918)</span>
                     <span class="breadcrumb-separator">›</span>
                     <span class="breadcrumb-item">${title}</span>
                 </div>
