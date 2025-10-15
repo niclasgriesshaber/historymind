@@ -376,24 +376,24 @@ class HistoryMindApp {
     }
 
     createLLMTranscriptionDisplay(section, llmContent) {
-        // Extract metrics
-        const metricsRow = section.querySelector('.metrics-row');
-        const llmMetric = section.querySelector('.llm-metric');
-        const gapMetric = section.querySelector('.gap-metric');
+        // Extract the LLM transcription with original highlighting
+        const llmContainer = section.querySelector('.text-container .llm-header');
+        if (llmContainer) {
+            const llmTextContainer = llmContainer.parentElement.querySelector('.text-content');
+            if (llmTextContainer) {
+                // Return only the highlighted LLM transcription text
+                return `
+                    <div class="llm-transcription-only">
+                        ${llmTextContainer.innerHTML}
+                    </div>
+                `;
+            }
+        }
         
-        // Get the filename
-        const filename = section.querySelector('h2.diff-file-heading').textContent;
-        
+        // Fallback to plain text if highlighting not found
         return `
-            <div class="llm-transcription-section">
-                <h2 class="llm-filename">${filename}</h2>
-                <div class="llm-metrics">
-                    ${metricsRow ? metricsRow.outerHTML : ''}
-                </div>
-                <div class="llm-content-section">
-                    <h3 class="llm-section-title">LLM-Generated Transcription</h3>
-                    <div class="llm-transcription-text">${llmContent}</div>
-                </div>
+            <div class="llm-transcription-only">
+                <div class="llm-transcription-text">${llmContent}</div>
             </div>
         `;
     }
