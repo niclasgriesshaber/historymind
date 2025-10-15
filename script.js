@@ -151,7 +151,6 @@ class HistoryMindApp {
             const year = filename.match(/Patentamt_(\d{4})_sampled\.pdf/)[1];
             return `
                 <div class="pdf-tile clickable" onclick="app.showPDFPreview('${filename}')">
-                    <div class="pdf-icon">📄</div>
                     <div class="pdf-year">${year}</div>
                 </div>
             `;
