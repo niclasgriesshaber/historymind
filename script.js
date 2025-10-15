@@ -3,7 +3,7 @@ class HistoryMindApp {
     constructor() {
         this.currentPage = 'home';
         this.pdfFiles = [
-            'Patentamt_1877_sampled.pdf', 'Patentamt_1878_sampled.pdf', 'Patentamt_1879_sampled.pdf',
+            'Patentamt_1878_sampled.pdf', 'Patentamt_1879_sampled.pdf',
             'Patentamt_1880_sampled.pdf', 'Patentamt_1881_sampled.pdf', 'Patentamt_1882_sampled.pdf',
             'Patentamt_1883_sampled.pdf', 'Patentamt_1884_sampled.pdf', 'Patentamt_1885_sampled.pdf',
             'Patentamt_1886_sampled.pdf', 'Patentamt_1887_sampled.pdf', 'Patentamt_1888_sampled.pdf',
@@ -289,8 +289,12 @@ class HistoryMindApp {
             button.textContent = 'Creating ZIP...';
             button.disabled = true;
 
+            // Check if JSZip is available
+            if (typeof JSZip === 'undefined') {
+                throw new Error('JSZip library not loaded');
+            }
+
             // Create a new JSZip instance
-            const JSZip = window.JSZip || await this.loadJSZip();
             const zip = new JSZip();
 
             // Add all PDF files to the zip
