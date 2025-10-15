@@ -11,12 +11,13 @@ body {
     color: #2d3748;
     background: #f8fafc;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 0 2rem;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -25,10 +26,11 @@ body {
 /* Header styles */
 .header {
     text-align: center;
-    margin-bottom: 2rem;
     padding: 1.5rem 0;
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     background: #f8fafc;
     z-index: 100;
     border-bottom: 1px solid #e2e8f0;
@@ -60,7 +62,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 1rem 0;
+    padding: 220px 0 1rem 0;
+    min-height: calc(100vh - 220px);
 }
 
 .paper-card {
