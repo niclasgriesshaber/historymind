@@ -381,18 +381,16 @@ class HistoryMindApp {
         if (llmContainer) {
             const llmTextContainer = llmContainer.parentElement.querySelector('.text-content');
             if (llmTextContainer) {
-                // Clean the HTML content to remove any indentation-causing elements
-                let cleanHTML = llmTextContainer.innerHTML;
+                // Get the raw text content to preserve newlines
+                let textContent = llmTextContainer.textContent || llmTextContainer.innerText;
                 
-                // Remove any leading whitespace and normalize
-                cleanHTML = cleanHTML.replace(/^\s+/, '').replace(/\n\s+/g, '\n');
+                // Clean up the text but preserve newlines between paragraphs
+                textContent = textContent.trim();
                 
-                // Return only the highlighted LLM transcription text with forced styling
+                // Return clean text with preserved newlines and no indentation
                 return `
-                    <div class="llm-transcription-only" style="text-indent: 0 !important; margin-left: 0 !important; padding-left: 0 !important;">
-                        <div style="text-indent: 0 !important; margin-left: 0 !important; padding-left: 0 !important; white-space: pre-wrap; font-family: 'Courier New', monospace;">
-                            ${cleanHTML}
-                        </div>
+                    <div class="llm-transcription-only" style="text-indent: 0 !important; margin: 0 !important; padding: 0.5rem !important; white-space: pre-wrap; font-family: 'Courier New', monospace; line-height: 1.6;">
+                        ${textContent}
                     </div>
                 `;
             }
@@ -400,10 +398,8 @@ class HistoryMindApp {
         
         // Fallback to plain text if highlighting not found
         return `
-            <div class="llm-transcription-only" style="text-indent: 0 !important; margin-left: 0 !important; padding-left: 0 !important;">
-                <div style="text-indent: 0 !important; margin-left: 0 !important; padding-left: 0 !important; white-space: pre-wrap; font-family: 'Courier New', monospace;">
-                    ${llmContent}
-                </div>
+            <div class="llm-transcription-only" style="text-indent: 0 !important; margin: 0 !important; padding: 0.5rem !important; white-space: pre-wrap; font-family: 'Courier New', monospace; line-height: 1.6;">
+                ${llmContent}
             </div>
         `;
     }
