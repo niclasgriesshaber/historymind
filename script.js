@@ -381,10 +381,18 @@ class HistoryMindApp {
         if (llmContainer) {
             const llmTextContainer = llmContainer.parentElement.querySelector('.text-content');
             if (llmTextContainer) {
-                // Return only the highlighted LLM transcription text
+                // Clean the HTML content to remove any indentation-causing elements
+                let cleanHTML = llmTextContainer.innerHTML;
+                
+                // Remove any leading whitespace and normalize
+                cleanHTML = cleanHTML.replace(/^\s+/, '').replace(/\n\s+/g, '\n');
+                
+                // Return only the highlighted LLM transcription text with forced styling
                 return `
-                    <div class="llm-transcription-only">
-                        ${llmTextContainer.innerHTML}
+                    <div class="llm-transcription-only" style="text-indent: 0 !important; margin-left: 0 !important; padding-left: 0 !important;">
+                        <div style="text-indent: 0 !important; margin-left: 0 !important; padding-left: 0 !important; white-space: pre-wrap; font-family: 'Courier New', monospace;">
+                            ${cleanHTML}
+                        </div>
                     </div>
                 `;
             }
@@ -392,8 +400,10 @@ class HistoryMindApp {
         
         // Fallback to plain text if highlighting not found
         return `
-            <div class="llm-transcription-only">
-                <div class="llm-transcription-text">${llmContent}</div>
+            <div class="llm-transcription-only" style="text-indent: 0 !important; margin-left: 0 !important; padding-left: 0 !important;">
+                <div style="text-indent: 0 !important; margin-left: 0 !important; padding-left: 0 !important; white-space: pre-wrap; font-family: 'Courier New', monospace;">
+                    ${llmContent}
+                </div>
             </div>
         `;
     }
@@ -547,7 +557,12 @@ class HistoryMindApp {
         if (transcriptionOnly && sizeDisplay) {
             const currentSize = parseInt(sizeDisplay.textContent);
             const newSize = Math.min(currentSize + 10, 150); // Max 150%
+            // Apply to both the container and inner div
             transcriptionOnly.style.fontSize = `${newSize}%`;
+            const innerDiv = transcriptionOnly.querySelector('div');
+            if (innerDiv) {
+                innerDiv.style.fontSize = `${newSize}%`;
+            }
             sizeDisplay.textContent = `${newSize}%`;
         }
     }
@@ -559,7 +574,12 @@ class HistoryMindApp {
         if (transcriptionOnly && sizeDisplay) {
             const currentSize = parseInt(sizeDisplay.textContent);
             const newSize = Math.max(currentSize - 10, 70); // Min 70%
+            // Apply to both the container and inner div
             transcriptionOnly.style.fontSize = `${newSize}%`;
+            const innerDiv = transcriptionOnly.querySelector('div');
+            if (innerDiv) {
+                innerDiv.style.fontSize = `${newSize}%`;
+            }
             sizeDisplay.textContent = `${newSize}%`;
         }
     }
