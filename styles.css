@@ -215,10 +215,11 @@ body {
 }
 
 .content-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #1a202c;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
     text-align: center;
+    margin-top: 3rem;
     margin-bottom: 2rem;
 }
 
@@ -885,7 +886,7 @@ body {
 /* Responsive Design for New Elements */
 @media (max-width: 768px) {
     .content-title {
-        font-size: 2rem;
+        font-size: 1.25rem;
     }
     
     .content-item {
@@ -928,7 +929,7 @@ body {
 
 @media (max-width: 480px) {
     .content-title {
-        font-size: 1.75rem;
+        font-size: 1.125rem;
     }
     
     .pdf-grid {
