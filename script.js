@@ -381,19 +381,19 @@ class HistoryMindApp {
         if (llmContainer) {
             const llmTextContainer = llmContainer.parentElement.querySelector('.text-content');
             if (llmTextContainer) {
-                // Get the raw text content to preserve newlines
-                let textContent = llmTextContainer.textContent || llmTextContainer.innerText;
+                // Get the HTML content to preserve highlighting
+                let htmlContent = llmTextContainer.innerHTML;
                 
-                // Clean up the text but preserve newlines between paragraphs
-                textContent = textContent.trim();
+                // Clean up the HTML but preserve highlighting and newlines
+                htmlContent = htmlContent.trim();
                 
                 // Remove any leading whitespace from the first line
-                textContent = textContent.replace(/^\s+/, '');
+                htmlContent = htmlContent.replace(/^\s+/, '');
                 
-                // Return clean text with preserved newlines and no indentation
+                // Return HTML with preserved highlighting and newlines
                 return `
                     <div class="llm-transcription-only" style="text-indent: 0 !important; margin: 0 !important; padding: 0.5rem !important; white-space: pre-wrap; font-family: 'Courier New', monospace; line-height: 1.6; text-align: left !important;">
-                        ${textContent}
+                        ${htmlContent}
                     </div>
                 `;
             }
