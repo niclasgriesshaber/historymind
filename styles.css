@@ -734,9 +734,53 @@ body {
     line-height: 1.6;
     color: #2d3748;
     white-space: pre-wrap;
-    text-indent: 0;
-    margin-left: 0;
+    text-indent: 0 !important;
+    margin-left: 0 !important;
     padding-left: 1rem;
+}
+
+/* Font size controls */
+.font-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.font-btn {
+    background: #3182ce;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.font-btn:hover {
+    background: #2c5282;
+}
+
+.font-size-display {
+    font-size: 0.875rem;
+    color: #4a5568;
+    font-weight: 500;
+    min-width: 40px;
+    text-align: center;
+}
+
+/* Force remove any indentation from transcription content */
+.llm-transcription-data {
+    text-indent: 0 !important;
+    margin-left: 0 !important;
+    padding-left: 1rem;
+}
+
+.llm-transcription-data * {
+    text-indent: 0 !important;
+    margin-left: 0 !important;
 }
 
 /* Preserve original highlighting from character_error_rate.html */

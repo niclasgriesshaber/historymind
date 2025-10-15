@@ -437,6 +437,11 @@ class HistoryMindApp {
                     <div class="llm-side">
                         <div class="llm-side-header">
                             <h3>LLM-Generated Transcription</h3>
+                            <div class="font-controls">
+                                <button class="font-btn" onclick="app.decreaseFontSize()" title="Decrease font size">A-</button>
+                                <span class="font-size-display">100%</span>
+                                <button class="font-btn" onclick="app.increaseFontSize()" title="Increase font size">A+</button>
+                            </div>
                         </div>
                         <div class="llm-side-content">
                             <div class="llm-transcription-data">${llmData}</div>
@@ -533,6 +538,30 @@ class HistoryMindApp {
                 llmContent.style.opacity = '1';
             }
         }, 200);
+    }
+
+    increaseFontSize() {
+        const transcriptionData = document.querySelector('.llm-transcription-data');
+        const sizeDisplay = document.querySelector('.font-size-display');
+        
+        if (transcriptionData && sizeDisplay) {
+            const currentSize = parseInt(sizeDisplay.textContent);
+            const newSize = Math.min(currentSize + 10, 150); // Max 150%
+            transcriptionData.style.fontSize = `${newSize}%`;
+            sizeDisplay.textContent = `${newSize}%`;
+        }
+    }
+
+    decreaseFontSize() {
+        const transcriptionData = document.querySelector('.llm-transcription-data');
+        const sizeDisplay = document.querySelector('.font-size-display');
+        
+        if (transcriptionData && sizeDisplay) {
+            const currentSize = parseInt(sizeDisplay.textContent);
+            const newSize = Math.max(currentSize - 10, 70); // Min 70%
+            transcriptionData.style.fontSize = `${newSize}%`;
+            sizeDisplay.textContent = `${newSize}%`;
+        }
     }
 
     async downloadAllPDFs() {
