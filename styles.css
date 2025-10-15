@@ -135,11 +135,16 @@ body {
     }
     
     .site-title {
-        font-size: 2.5rem;
+        font-size: 1.5rem;
     }
     
     .site-subtitle {
         font-size: 1.125rem;
+    }
+    
+    .main-content {
+        padding: 120px 0 2rem 0;
+        min-height: calc(100vh - 120px);
     }
     
     .paper-card {
@@ -159,7 +164,12 @@ body {
 
 @media (max-width: 480px) {
     .site-title {
-        font-size: 2rem;
+        font-size: 1.25rem;
+    }
+    
+    .main-content {
+        padding: 110px 0 1rem 0;
+        min-height: calc(100vh - 110px);
     }
     
     .paper-card {
@@ -917,6 +927,14 @@ body {
         font-size: 1rem;
     }
     
+    .item-number-swapped {
+        font-size: 1rem;
+    }
+    
+    .item-text-swapped {
+        font-size: 1.25rem;
+    }
+    
     .pdf-grid {
         grid-template-columns: repeat(4, 1fr);
         -webkit-grid-template-columns: repeat(4, 1fr);
@@ -958,5 +976,13 @@ body {
     
     .pdf-name {
         font-size: 0.75rem;
+    }
+    
+    .item-number-swapped {
+        font-size: 0.875rem;
+    }
+    
+    .item-text-swapped {
+        font-size: 1.125rem;
     }
 }
