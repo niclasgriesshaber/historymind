@@ -227,7 +227,7 @@ class HistoryMindApp {
                         <span class="pdf-filename">${filename}</span>
                     </div>
                     <div class="pdf-actions">
-                        <button class="compare-btn" onclick="app.openCharacterErrorRate()">Compare with LLM Transcriptions</button>
+                        <button class="compare-btn" onclick="app.showComparison('${filename}')">Compare with LLM Transcriptions</button>
                         <button class="download-btn" onclick="app.downloadPDF('${filename}')">Download PDF</button>
                         <button class="back-btn" onclick="app.showSampledPDFs()">Back to PDFs</button>
                     </div>
@@ -323,6 +323,96 @@ class HistoryMindApp {
 
     openCharacterErrorRate() {
         window.open('data/character_error_rate.html', '_blank');
+    }
+
+    async showComparison(filename) {
+        const year = filename.match(/Patentamt_(\d{4})_sampled\.pdf/)[1];
+        
+        try {
+            // Fetch the character error rate HTML
+            const response = await fetch('data/character_error_rate.html');
+            const html = await response.text();
+            
+            // Parse the HTML to extract the specific year's LLM transcription
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            
+            // Find the section for this specific year
+            const yearSection = doc.querySelector(`section.three-diff-section h2.diff-file-heading:contains("${filename}")`);
+            if (!yearSection) {
+                // Try to find by year pattern
+                const sections = doc.querySelectorAll('section.three-diff-section');
+                let targetSection = null;
+                
+                for (const section of sections) {
+                    const heading = section.querySelector('h2.diff-file-heading');
+                    if (heading && heading.textContent.includes(`Patentamt_${year}_sampled.pdf`)) {
+                        targetSection = section;
+                        break;
+                    }
+                }
+                
+                if (targetSection) {
+                    this.showSideBySideComparison(filename, targetSection.outerHTML);
+                } else {
+                    alert(`No LLM transcription data found for ${year}`);
+                }
+            } else {
+                this.showSideBySideComparison(filename, yearSection.closest('section').outerHTML);
+            }
+        } catch (error) {
+            console.error('Error loading comparison data:', error);
+            alert('Error loading LLM transcription data');
+        }
+    }
+
+    showSideBySideComparison(filename, llmData) {
+        const currentIndex = this.pdfFiles.indexOf(filename);
+        const prevFile = currentIndex > 0 ? this.pdfFiles[currentIndex - 1] : null;
+        const nextFile = currentIndex < this.pdfFiles.length - 1 ? this.pdfFiles[currentIndex + 1] : null;
+        
+        const container = document.querySelector('.container');
+        container.innerHTML = `
+            <div class="comparison-container">
+                <div class="comparison-controls">
+                    <div class="comparison-navigation">
+                        <button class="nav-btn prev-btn" ${!prevFile ? 'disabled' : ''} onclick="app.smoothTransition('${prevFile || ''}')" title="Previous PDF">
+                            ←
+                        </button>
+                        <span class="pdf-counter">${currentIndex + 1} of ${this.pdfFiles.length}</span>
+                        <button class="nav-btn next-btn" ${!nextFile ? 'disabled' : ''} onclick="app.smoothTransition('${nextFile || ''}')" title="Next PDF">
+                            →
+                        </button>
+                    </div>
+                    <div class="comparison-info">
+                        <span class="comparison-filename">${filename}</span>
+                    </div>
+                    <div class="comparison-actions">
+                        <button class="close-comparison-btn" onclick="app.showPDFPreview('${filename}')">Close Comparison</button>
+                        <button class="download-btn" onclick="app.downloadPDF('${filename}')">Download PDF</button>
+                        <button class="back-btn" onclick="app.showSampledPDFs()">Back to PDFs</button>
+                    </div>
+                </div>
+                <div class="comparison-content">
+                    <div class="pdf-side">
+                        <div class="pdf-side-header">
+                            <h3>PDF Preview</h3>
+                        </div>
+                        <div class="pdf-side-content">
+                            <iframe src="data/sampled_pdfs/${filename}#page=1&view=FitH" class="comparison-pdf-iframe" type="application/pdf"></iframe>
+                        </div>
+                    </div>
+                    <div class="llm-side">
+                        <div class="llm-side-header">
+                            <h3>LLM-Generated Transcription</h3>
+                        </div>
+                        <div class="llm-side-content">
+                            <div class="llm-transcription-data">${llmData}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
     }
 
     async downloadAllPDFs() {
