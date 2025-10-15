@@ -134,9 +134,6 @@ class HistoryMindApp {
                 <div class="pdf-section">
                     <div class="pdf-header">
                         <h2 class="pdf-section-title">Sampled PDFs and AI Transcriptions</h2>
-                        <button class="download-all-btn" onclick="app.downloadAllPDFs()">
-                            Download All Sampled PDFs
-                        </button>
                     </div>
                     
                     <div class="pdf-grid" id="pdfGrid">
@@ -257,6 +254,11 @@ class HistoryMindApp {
 
 
     showPDFPreview(filename) {
+        // Automatically open comparison view instead of just PDF preview
+        this.showComparison(filename);
+    }
+
+    showPDFOnly(filename) {
         const currentIndex = this.pdfFiles.indexOf(filename);
         const prevFile = currentIndex > 0 ? this.pdfFiles[currentIndex - 1] : null;
         const nextFile = currentIndex < this.pdfFiles.length - 1 ? this.pdfFiles[currentIndex + 1] : null;
@@ -279,7 +281,6 @@ class HistoryMindApp {
                     </div>
                     <div class="pdf-actions">
                         <button class="compare-btn" onclick="app.showComparison('${filename}')">Compare with LLM Transcriptions</button>
-                        <button class="download-btn" onclick="app.downloadPDF('${filename}')">Download PDF</button>
                         <button class="back-btn" onclick="app.showSampledPDFs()">Back to PDFs</button>
                     </div>
                 </div>
@@ -363,14 +364,6 @@ class HistoryMindApp {
         `;
     }
 
-    downloadPDF(filename) {
-        const link = document.createElement('a');
-        link.href = `data/sampled_pdfs/${filename}`;
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
 
     openCharacterErrorRate() {
         window.open('data/character_error_rate.html', '_blank');
@@ -480,8 +473,7 @@ class HistoryMindApp {
                         <span class="comparison-filename">${filename}</span>
                     </div>
                     <div class="comparison-actions">
-                        <button class="close-comparison-btn" onclick="app.showPDFPreview('${filename}')">Close Comparison</button>
-                        <button class="download-btn" onclick="app.downloadPDF('${filename}')">Download PDF</button>
+                        <button class="close-comparison-btn" onclick="app.showPDFOnly('${filename}')">Close Comparison</button>
                         <button class="back-btn" onclick="app.showSampledPDFs()">Back to PDFs</button>
                     </div>
                 </div>
