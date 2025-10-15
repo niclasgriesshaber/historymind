@@ -206,14 +206,28 @@ class HistoryMindApp {
 
 
     showPDFPreview(filename) {
+        const currentIndex = this.pdfFiles.indexOf(filename);
+        const prevFile = currentIndex > 0 ? this.pdfFiles[currentIndex - 1] : null;
+        const nextFile = currentIndex < this.pdfFiles.length - 1 ? this.pdfFiles[currentIndex + 1] : null;
+        
         const container = document.querySelector('.container');
         container.innerHTML = `
             <div class="pdf-fullscreen-container">
                 <div class="pdf-controls">
+                    <div class="pdf-navigation">
+                        <button class="nav-btn prev-btn" ${!prevFile ? 'disabled' : ''} onclick="app.showPDFPreview('${prevFile || ''}')" title="Previous PDF">
+                            ←
+                        </button>
+                        <span class="pdf-counter">${currentIndex + 1} of ${this.pdfFiles.length}</span>
+                        <button class="nav-btn next-btn" ${!nextFile ? 'disabled' : ''} onclick="app.showPDFPreview('${nextFile || ''}')" title="Next PDF">
+                            →
+                        </button>
+                    </div>
                     <div class="pdf-info">
                         <span class="pdf-filename">${filename}</span>
                     </div>
                     <div class="pdf-actions">
+                        <button class="compare-btn" onclick="app.openCharacterErrorRate()">Compare with LLM Transcriptions</button>
                         <button class="download-btn" onclick="app.downloadPDF('${filename}')">Download PDF</button>
                         <button class="back-btn" onclick="app.showSampledPDFs()">Back to PDFs</button>
                     </div>
@@ -261,6 +275,10 @@ class HistoryMindApp {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+    }
+
+    openCharacterErrorRate() {
+        window.open('data/character_error_rate.html', '_blank');
     }
 
     async downloadAllPDFs() {

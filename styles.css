@@ -436,6 +436,7 @@ body {
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    gap: 2rem;
 }
 
 .pdf-info {
@@ -448,9 +449,63 @@ body {
     color: #2d3748;
 }
 
+.pdf-navigation {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-btn {
+    background: #3182ce;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 40px;
+}
+
+.nav-btn:hover:not(:disabled) {
+    background: #2c5282;
+    transform: translateY(-1px);
+}
+
+.nav-btn:disabled {
+    background: #a0aec0;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.pdf-counter {
+    font-size: 0.875rem;
+    color: #718096;
+    font-weight: 500;
+    min-width: 80px;
+    text-align: center;
+}
+
 .pdf-actions {
     display: flex;
     gap: 1rem;
+}
+
+.compare-btn {
+    background: #38a169;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.compare-btn:hover {
+    background: #2f855a;
+    transform: translateY(-1px);
 }
 
 .pdf-fullscreen-viewer {
