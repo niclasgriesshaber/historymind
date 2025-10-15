@@ -314,6 +314,8 @@ body {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     gap: 1.5rem;
+    -webkit-grid-template-columns: repeat(8, 1fr);
+    -webkit-gap: 1.5rem;
 }
 
 .pdf-tile {
@@ -326,8 +328,29 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    min-height: 50px;
     aspect-ratio: 1;
     cursor: pointer;
+}
+
+/* Safari fallback for aspect-ratio */
+@supports not (aspect-ratio: 1) {
+    .pdf-tile {
+        height: 0;
+        padding-bottom: 100%;
+        position: relative;
+    }
+    
+    .pdf-tile > * {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 .pdf-tile:hover {
@@ -880,7 +903,9 @@ body {
     
     .pdf-grid {
         grid-template-columns: repeat(4, 1fr);
+        -webkit-grid-template-columns: repeat(4, 1fr);
         gap: 1rem;
+        -webkit-gap: 1rem;
     }
     
     .pdf-tile {
@@ -908,6 +933,7 @@ body {
     
     .pdf-grid {
         grid-template-columns: repeat(2, 1fr);
+        -webkit-grid-template-columns: repeat(2, 1fr);
     }
     
     .pdf-tile {
