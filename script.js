@@ -42,6 +42,9 @@ class HistoryMindApp {
             <header class="header">
                 <h1 class="site-title">HistoryMind</h1>
                 <p class="site-subtitle">Data Quality Validation for Economic History Papers</p>
+                <div class="breadcrumb">
+                    <span class="breadcrumb-item">Home</span>
+                </div>
             </header>
             
             <main class="main-content">
