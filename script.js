@@ -43,20 +43,14 @@ class HistoryMindApp {
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         
         if (isMobile) {
-            // Add touch event listeners to PDF iframes
-            document.addEventListener('touchstart', (e) => {
-                const iframe = e.target.closest('iframe');
-                if (iframe && (iframe.classList.contains('comparison-pdf-iframe') || iframe.classList.contains('pdf-fullscreen-iframe'))) {
-                    // Allow touch events on PDF iframes
-                    e.stopPropagation();
-                }
-            }, { passive: true });
+            // Add a class to body for mobile-specific styling
+            document.body.classList.add('mobile-device');
             
-            // Prevent page zoom when touching PDF areas
-            document.addEventListener('touchmove', (e) => {
-                const iframe = e.target.closest('iframe');
-                if (iframe && (iframe.classList.contains('comparison-pdf-iframe') || iframe.classList.contains('pdf-fullscreen-iframe'))) {
-                    // Allow touch move on PDF iframes
+            // Add touch event listeners to PDF containers for better mobile handling
+            document.addEventListener('touchstart', (e) => {
+                const pdfContainer = e.target.closest('.pdf-side-content, .pdf-fullscreen-viewer');
+                if (pdfContainer) {
+                    // Allow touch events on PDF containers
                     e.stopPropagation();
                 }
             }, { passive: true });
@@ -425,7 +419,7 @@ class HistoryMindApp {
                     </div>
                 </div>
                 <div class="pdf-fullscreen-viewer">
-                    <iframe src="data/sampled_pdfs/${filename}#page=1&view=FitH" class="pdf-fullscreen-iframe" type="application/pdf"></iframe>
+                    <iframe src="data/sampled_pdfs/${filename}#page=1&view=FitH&zoom=100&toolbar=1&navpanes=1&scrollbar=1" class="pdf-fullscreen-iframe" type="application/pdf"></iframe>
                 </div>
             </div>
         `;
@@ -456,7 +450,7 @@ class HistoryMindApp {
         
         setTimeout(() => {
             // Update iframe source
-            iframe.src = `data/sampled_pdfs/${filename}#page=1&view=FitH`;
+            iframe.src = `data/sampled_pdfs/${filename}#page=1&view=FitH&zoom=100&toolbar=1&navpanes=1&scrollbar=1`;
             
             // Update filename and counter
             const currentIndex = this.pdfFiles.indexOf(filename);
@@ -638,7 +632,7 @@ class HistoryMindApp {
                             <h3>PDF Preview</h3>
                         </div>
                         <div class="pdf-side-content">
-                            <iframe src="data/sampled_pdfs/${filename}#page=1&view=FitH" class="comparison-pdf-iframe" type="application/pdf"></iframe>
+                            <iframe src="data/sampled_pdfs/${filename}#page=1&view=FitH&zoom=100&toolbar=1&navpanes=1&scrollbar=1" class="comparison-pdf-iframe" type="application/pdf"></iframe>
                         </div>
                     </div>
                     <div class="llm-side">
@@ -688,7 +682,7 @@ class HistoryMindApp {
         setTimeout(async () => {
             try {
                 // Update iframe source
-                iframe.src = `data/sampled_pdfs/${filename}#page=1&view=FitH`;
+                iframe.src = `data/sampled_pdfs/${filename}#page=1&view=FitH&zoom=100&toolbar=1&navpanes=1&scrollbar=1`;
                 
                 // Update filename and counter
                 const currentIndex = this.pdfFiles.indexOf(filename);

@@ -1141,33 +1141,27 @@ body.scrollable {
         height: 50vh !important;
     }
     
-    /* Enable PDF zooming on mobile without affecting page layout */
-    .comparison-pdf-iframe {
-        touch-action: pan-x pan-y pinch-zoom !important;
+    /* Mobile PDF iframe optimization for better zoom behavior */
+    .comparison-pdf-iframe, .pdf-fullscreen-iframe {
+        width: 100% !important;
+        height: 100% !important;
+        border: none !important;
         -webkit-overflow-scrolling: touch !important;
-        overflow: auto !important;
-        transform-origin: center center !important;
     }
     
-    .pdf-fullscreen-iframe {
-        touch-action: pan-x pan-y pinch-zoom !important;
-        -webkit-overflow-scrolling: touch !important;
-        overflow: auto !important;
-        transform-origin: center center !important;
-    }
-    
-    /* Enable zoom within PDF containers */
+    /* Ensure PDF containers allow proper iframe interaction */
     .pdf-side-content, .pdf-fullscreen-viewer {
-        touch-action: pan-x pan-y pinch-zoom !important;
-        overflow: hidden !important;
         position: relative !important;
+        overflow: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
     }
     
-    /* Allow PDF iframe to handle its own zoom */
-    .pdf-side-content iframe, .pdf-fullscreen-viewer iframe {
-        touch-action: pan-x pan-y pinch-zoom !important;
-        pointer-events: auto !important;
-        -webkit-user-select: none !important;
-        user-select: none !important;
+    /* Mobile device specific PDF handling */
+    body.mobile-device .comparison-pdf-iframe,
+    body.mobile-device .pdf-fullscreen-iframe {
+        -webkit-transform: translateZ(0) !important;
+        transform: translateZ(0) !important;
+        -webkit-backface-visibility: hidden !important;
+        backface-visibility: hidden !important;
     }
 }
