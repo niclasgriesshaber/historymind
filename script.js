@@ -266,6 +266,8 @@ class HistoryMindApp {
         const nextFile = currentIndex < this.pdfFiles.length - 1 ? this.pdfFiles[currentIndex + 1] : null;
         
         const container = document.querySelector('.container');
+        // Reset scroll position
+        window.scrollTo(0, 0);
         container.innerHTML = `
             <div class="pdf-fullscreen-container">
                 <div class="pdf-controls">
@@ -299,6 +301,9 @@ class HistoryMindApp {
         const counterSpan = document.querySelector('.pdf-counter');
         
         if (!iframe) return;
+        
+        // Reset scroll position
+        window.scrollTo(0, 0);
         
         // Start fade out
         iframe.style.opacity = '0';
@@ -361,6 +366,9 @@ class HistoryMindApp {
 
     async showComparison(filename) {
         const year = filename.match(/Patentamt_(\d{4})_sampled\.pdf/)[1];
+        
+        // Reset scroll position
+        window.scrollTo(0, 0);
         
         try {
             // Fetch the character error rate HTML
@@ -501,6 +509,9 @@ class HistoryMindApp {
         const counterSpan = document.querySelector('.pdf-counter');
         
         if (!iframe || !llmContent) return;
+        
+        // Reset scroll position
+        window.scrollTo(0, 0);
         
         // Start fade out
         iframe.style.opacity = '0';
