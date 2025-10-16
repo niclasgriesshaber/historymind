@@ -46,6 +46,9 @@ class HistoryMindApp {
             // Add a class to body for mobile-specific styling
             document.body.classList.add('mobile-device');
             
+            // Store mobile flag for use in PDF URL generation
+            this.isMobile = true;
+            
             // Add touch event listeners to PDF containers for better mobile handling
             document.addEventListener('touchstart', (e) => {
                 const pdfContainer = e.target.closest('.pdf-side-content, .pdf-fullscreen-viewer');
@@ -419,7 +422,7 @@ class HistoryMindApp {
                     </div>
                 </div>
                 <div class="pdf-fullscreen-viewer">
-                    <iframe src="data/sampled_pdfs/${filename}#page=1&view=FitH&zoom=100&toolbar=1&navpanes=1&scrollbar=1" class="pdf-fullscreen-iframe" type="application/pdf"></iframe>
+                    <iframe src="data/sampled_pdfs/${filename}#page=1&view=FitH&zoom=${this.isMobile ? '200' : '100'}&toolbar=1&navpanes=1&scrollbar=1" class="pdf-fullscreen-iframe" type="application/pdf"></iframe>
                 </div>
             </div>
         `;
@@ -450,7 +453,7 @@ class HistoryMindApp {
         
         setTimeout(() => {
             // Update iframe source
-            iframe.src = `data/sampled_pdfs/${filename}#page=1&view=FitH&zoom=100&toolbar=1&navpanes=1&scrollbar=1`;
+            iframe.src = `data/sampled_pdfs/${filename}#page=1&view=FitH&zoom=${this.isMobile ? '200' : '100'}&toolbar=1&navpanes=1&scrollbar=1`;
             
             // Update filename and counter
             const currentIndex = this.pdfFiles.indexOf(filename);
@@ -632,7 +635,7 @@ class HistoryMindApp {
                             <h3>PDF Preview</h3>
                         </div>
                         <div class="pdf-side-content">
-                            <iframe src="data/sampled_pdfs/${filename}#page=1&view=FitH&zoom=100&toolbar=1&navpanes=1&scrollbar=1" class="comparison-pdf-iframe" type="application/pdf"></iframe>
+                            <iframe src="data/sampled_pdfs/${filename}#page=1&view=FitH&zoom=${this.isMobile ? '200' : '100'}&toolbar=1&navpanes=1&scrollbar=1" class="comparison-pdf-iframe" type="application/pdf"></iframe>
                         </div>
                     </div>
                     <div class="llm-side">
@@ -682,7 +685,7 @@ class HistoryMindApp {
         setTimeout(async () => {
             try {
                 // Update iframe source
-                iframe.src = `data/sampled_pdfs/${filename}#page=1&view=FitH&zoom=100&toolbar=1&navpanes=1&scrollbar=1`;
+                iframe.src = `data/sampled_pdfs/${filename}#page=1&view=FitH&zoom=${this.isMobile ? '200' : '100'}&toolbar=1&navpanes=1&scrollbar=1`;
                 
                 // Update filename and counter
                 const currentIndex = this.pdfFiles.indexOf(filename);
