@@ -12,6 +12,12 @@ body {
     background: #f8fafc;
     min-height: 100vh;
     overflow-x: hidden;
+    overflow-y: hidden; /* Disable scrolling by default */
+}
+
+/* Enable scrolling only for specific pages */
+body.scrollable {
+    overflow-y: auto;
 }
 
 .container {

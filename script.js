@@ -23,7 +23,18 @@ class HistoryMindApp {
 
     init() {
         this.bindEvents();
+        // Set initial scroll behavior (disabled by default)
+        this.setPageScrollable(false);
         this.showHomePage();
+    }
+
+    // Helper method to control page scrolling
+    setPageScrollable(isScrollable) {
+        if (isScrollable) {
+            document.body.classList.add('scrollable');
+        } else {
+            document.body.classList.remove('scrollable');
+        }
     }
 
     bindEvents() {
@@ -62,21 +73,28 @@ class HistoryMindApp {
         const path = window.location.pathname;
         
         if (path === '/' || path === '/index.html') {
+            this.setPageScrollable(false); // Disable scrolling on home page
             this.showHomePageContent();
         } else if (path === '/sampled-pdfs.html') {
+            this.setPageScrollable(true); // Enable scrolling on Sampled PDFs page
             this.showSampledPDFsContent();
         } else if (path === '/full-dataset.html') {
+            this.setPageScrollable(false); // Disable scrolling on full dataset page
             this.showFullDatasetContent();
         } else if (path === '/patent-entry-extraction.html') {
+            this.setPageScrollable(false); // Disable scrolling on patent extraction page
             this.showPatentExtractionContent();
         } else if (path.startsWith('/sampled-pdfs/') && path.includes('-comparison.html')) {
+            this.setPageScrollable(false); // Disable scrolling on comparison pages
             const year = path.match(/\/sampled-pdfs\/(\d+)-comparison\.html/)[1];
             this.showComparisonContent(year);
         } else if (path.startsWith('/sampled-pdfs/') && path.endsWith('.html')) {
+            this.setPageScrollable(false); // Disable scrolling on PDF pages
             const year = path.match(/\/sampled-pdfs\/(\d+)\.html/)[1];
             this.showPDFContent(year);
         } else {
             // Fallback to home page
+            this.setPageScrollable(false); // Disable scrolling on home page
             this.showHomePageContent();
         }
         
@@ -96,6 +114,10 @@ class HistoryMindApp {
     showHomePage() {
         // Update URL
         window.history.pushState({page: 'home'}, '', '/');
+        
+        // Disable scrolling on home page
+        this.setPageScrollable(false);
+        
         this.showHomePageContent();
         // Reset scroll position immediately (handles mobile Safari)
         window.scrollTo(0, 0);
@@ -155,6 +177,10 @@ class HistoryMindApp {
     showSampledPDFs() {
         // Update URL
         window.history.pushState({page: 'sampled-pdfs'}, '', '/sampled-pdfs.html');
+        
+        // Enable scrolling on Sampled PDFs page (year tiles)
+        this.setPageScrollable(true);
+        
         this.showSampledPDFsContent();
         // Reset scroll position immediately (handles mobile Safari)
         window.scrollTo(0, 0);
@@ -222,6 +248,10 @@ class HistoryMindApp {
     showFullDatasetOptions() {
         // Update URL
         window.history.pushState({page: 'full-dataset'}, '', '/full-dataset.html');
+        
+        // Disable scrolling on full dataset page
+        this.setPageScrollable(false);
+        
         this.showFullDatasetContent();
         // Reset scroll position immediately (handles mobile Safari)
         window.scrollTo(0, 0);
@@ -265,6 +295,10 @@ class HistoryMindApp {
     showPatentExtractionPage() {
         // Update URL
         window.history.pushState({page: 'patent-extraction'}, '', '/patent-entry-extraction.html');
+        
+        // Disable scrolling on patent extraction page
+        this.setPageScrollable(false);
+        
         this.showPatentExtractionContent();
         // Reset scroll position immediately (handles mobile Safari)
         window.scrollTo(0, 0);
@@ -325,6 +359,9 @@ class HistoryMindApp {
         const currentIndex = this.pdfFiles.indexOf(filename);
         const prevFile = currentIndex > 0 ? this.pdfFiles[currentIndex - 1] : null;
         const nextFile = currentIndex < this.pdfFiles.length - 1 ? this.pdfFiles[currentIndex + 1] : null;
+        
+        // Disable scrolling on PDF-only view
+        this.setPageScrollable(false);
         
         const container = document.querySelector('.container');
         // Reset scroll position immediately (handles mobile Safari)
@@ -445,6 +482,9 @@ class HistoryMindApp {
 
     async showComparison(filename) {
         const year = filename.match(/Patentamt_(\d{4})_sampled\.pdf/)[1];
+        
+        // Disable scrolling on comparison view
+        this.setPageScrollable(false);
         
         // Reset scroll position immediately (handles mobile Safari)
         window.scrollTo(0, 0);
