@@ -39,6 +39,22 @@ class HistoryMindApp {
         window.addEventListener('popstate', (e) => {
             this.handlePopState(e);
         });
+        
+        // Ensure scroll position is correct on page load (mobile fix)
+        window.addEventListener('load', () => {
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+        });
+        
+        // Handle orientation change on mobile
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                window.scrollTo(0, 0);
+                document.documentElement.scrollTop = 0;
+                document.body.scrollTop = 0;
+            }, 100);
+        });
     }
 
     handlePopState(event) {
@@ -64,16 +80,34 @@ class HistoryMindApp {
             this.showHomePageContent();
         }
         
-        // Reset scroll position for browser navigation
+        // Reset scroll position immediately (handles mobile Safari)
         window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        
+        // Force scroll reset on mobile
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+        }, 0);
     }
 
     showHomePage() {
         // Update URL
         window.history.pushState({page: 'home'}, '', '/');
         this.showHomePageContent();
-        // Reset scroll position
+        // Reset scroll position immediately (handles mobile Safari)
         window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        
+        // Force scroll reset on mobile
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+        }, 0);
     }
 
     showHomePageContent() {
@@ -122,8 +156,17 @@ class HistoryMindApp {
         // Update URL
         window.history.pushState({page: 'sampled-pdfs'}, '', '/sampled-pdfs.html');
         this.showSampledPDFsContent();
-        // Reset scroll position
+        // Reset scroll position immediately (handles mobile Safari)
         window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        
+        // Force scroll reset on mobile
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+        }, 0);
     }
 
     showSampledPDFsContent() {
@@ -180,8 +223,17 @@ class HistoryMindApp {
         // Update URL
         window.history.pushState({page: 'full-dataset'}, '', '/full-dataset.html');
         this.showFullDatasetContent();
-        // Reset scroll position
+        // Reset scroll position immediately (handles mobile Safari)
         window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        
+        // Force scroll reset on mobile
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+        }, 0);
     }
 
     showFullDatasetContent() {
@@ -214,8 +266,17 @@ class HistoryMindApp {
         // Update URL
         window.history.pushState({page: 'patent-extraction'}, '', '/patent-entry-extraction.html');
         this.showPatentExtractionContent();
-        // Reset scroll position
+        // Reset scroll position immediately (handles mobile Safari)
         window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        
+        // Force scroll reset on mobile
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+        }, 0);
     }
 
     showPatentExtractionContent() {
@@ -266,8 +327,17 @@ class HistoryMindApp {
         const nextFile = currentIndex < this.pdfFiles.length - 1 ? this.pdfFiles[currentIndex + 1] : null;
         
         const container = document.querySelector('.container');
-        // Reset scroll position
+        // Reset scroll position immediately (handles mobile Safari)
         window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        
+        // Force scroll reset on mobile
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+        }, 0);
         container.innerHTML = `
             <div class="pdf-fullscreen-container">
                 <div class="pdf-controls">
@@ -302,8 +372,17 @@ class HistoryMindApp {
         
         if (!iframe) return;
         
-        // Reset scroll position
+        // Reset scroll position immediately (handles mobile Safari)
         window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        
+        // Force scroll reset on mobile
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+        }, 0);
         
         // Start fade out
         iframe.style.opacity = '0';
@@ -367,8 +446,17 @@ class HistoryMindApp {
     async showComparison(filename) {
         const year = filename.match(/Patentamt_(\d{4})_sampled\.pdf/)[1];
         
-        // Reset scroll position
+        // Reset scroll position immediately (handles mobile Safari)
         window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        
+        // Force scroll reset on mobile
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+        }, 0);
         
         try {
             // Fetch the character error rate HTML
@@ -510,8 +598,17 @@ class HistoryMindApp {
         
         if (!iframe || !llmContent) return;
         
-        // Reset scroll position
+        // Reset scroll position immediately (handles mobile Safari)
         window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        
+        // Force scroll reset on mobile
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+        }, 0);
         
         // Start fade out
         iframe.style.opacity = '0';
