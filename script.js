@@ -63,12 +63,17 @@ class HistoryMindApp {
             // Fallback to home page
             this.showHomePageContent();
         }
+        
+        // Reset scroll position for browser navigation
+        window.scrollTo(0, 0);
     }
 
     showHomePage() {
         // Update URL
         window.history.pushState({page: 'home'}, '', '/');
         this.showHomePageContent();
+        // Reset scroll position
+        window.scrollTo(0, 0);
     }
 
     showHomePageContent() {
@@ -117,6 +122,8 @@ class HistoryMindApp {
         // Update URL
         window.history.pushState({page: 'sampled-pdfs'}, '', '/sampled-pdfs.html');
         this.showSampledPDFsContent();
+        // Reset scroll position
+        window.scrollTo(0, 0);
     }
 
     showSampledPDFsContent() {
@@ -173,6 +180,8 @@ class HistoryMindApp {
         // Update URL
         window.history.pushState({page: 'full-dataset'}, '', '/full-dataset.html');
         this.showFullDatasetContent();
+        // Reset scroll position
+        window.scrollTo(0, 0);
     }
 
     showFullDatasetContent() {
@@ -205,6 +214,8 @@ class HistoryMindApp {
         // Update URL
         window.history.pushState({page: 'patent-extraction'}, '', '/patent-entry-extraction.html');
         this.showPatentExtractionContent();
+        // Reset scroll position
+        window.scrollTo(0, 0);
     }
 
     showPatentExtractionContent() {
