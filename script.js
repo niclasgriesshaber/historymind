@@ -34,12 +34,44 @@ class HistoryMindApp {
                 this.showHomePage();
             }
         });
+
+        // Handle browser back/forward navigation
+        window.addEventListener('popstate', (e) => {
+            this.handlePopState(e);
+        });
+    }
+
+    handlePopState(event) {
+        // Get the current path and navigate accordingly
+        const path = window.location.pathname;
+        
+        if (path === '/' || path === '/index.html') {
+            this.showHomePageContent();
+        } else if (path === '/sampled-pdfs.html') {
+            this.showSampledPDFsContent();
+        } else if (path === '/full-dataset.html') {
+            this.showFullDatasetContent();
+        } else if (path === '/patent-entry-extraction.html') {
+            this.showPatentExtractionContent();
+        } else if (path.startsWith('/sampled-pdfs/') && path.includes('-comparison.html')) {
+            const year = path.match(/\/sampled-pdfs\/(\d+)-comparison\.html/)[1];
+            this.showComparisonContent(year);
+        } else if (path.startsWith('/sampled-pdfs/') && path.endsWith('.html')) {
+            const year = path.match(/\/sampled-pdfs\/(\d+)\.html/)[1];
+            this.showPDFContent(year);
+        } else {
+            // Fallback to home page
+            this.showHomePageContent();
+        }
     }
 
     showHomePage() {
         // Update URL
         window.history.pushState({page: 'home'}, '', '/');
-        
+        this.showHomePageContent();
+    }
+
+    showHomePageContent() {
         const container = document.querySelector('.container');
         container.innerHTML = `
             <header class="header">
@@ -84,7 +116,10 @@ class HistoryMindApp {
     showSampledPDFs() {
         // Update URL
         window.history.pushState({page: 'sampled-pdfs'}, '', '/sampled-pdfs.html');
-        
+        this.showSampledPDFsContent();
+    }
+
+    showSampledPDFsContent() {
         const container = document.querySelector('.container');
         container.innerHTML = `
             <header class="header">
@@ -137,7 +172,10 @@ class HistoryMindApp {
     showFullDatasetOptions() {
         // Update URL
         window.history.pushState({page: 'full-dataset'}, '', '/full-dataset.html');
-        
+        this.showFullDatasetContent();
+    }
+
+    showFullDatasetContent() {
         const container = document.querySelector('.container');
         container.innerHTML = `
             <header class="header">
@@ -166,7 +204,10 @@ class HistoryMindApp {
     showPatentExtractionPage() {
         // Update URL
         window.history.pushState({page: 'patent-extraction'}, '', '/patent-entry-extraction.html');
-        
+        this.showPatentExtractionContent();
+    }
+
+    showPatentExtractionContent() {
         const container = document.querySelector('.container');
         container.innerHTML = `
             <header class="header">
@@ -193,6 +234,15 @@ class HistoryMindApp {
         `;
     }
 
+    showPDFContent(year) {
+        const filename = `Patentamt_${year}_sampled.pdf`;
+        this.showPDFOnly(filename);
+    }
+
+    async showComparisonContent(year) {
+        const filename = `Patentamt_${year}_sampled.pdf`;
+        await this.showComparison(filename);
+    }
 
     showPDFPreview(filename) {
         // Automatically open comparison view instead of just PDF preview
