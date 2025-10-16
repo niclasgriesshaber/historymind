@@ -37,6 +37,9 @@ class HistoryMindApp {
     }
 
     showHomePage() {
+        // Update URL
+        window.history.pushState({page: 'home'}, '', '/');
+        
         const container = document.querySelector('.container');
         container.innerHTML = `
             <header class="header">
@@ -79,6 +82,9 @@ class HistoryMindApp {
 
 
     showSampledPDFs() {
+        // Update URL
+        window.history.pushState({page: 'sampled-pdfs'}, '', '/sampled-pdfs.html');
+        
         const container = document.querySelector('.container');
         container.innerHTML = `
             <header class="header">
@@ -129,6 +135,9 @@ class HistoryMindApp {
     }
 
     showFullDatasetOptions() {
+        // Update URL
+        window.history.pushState({page: 'full-dataset'}, '', '/full-dataset.html');
+        
         const container = document.querySelector('.container');
         container.innerHTML = `
             <header class="header">
@@ -155,6 +164,9 @@ class HistoryMindApp {
     }
 
     showPatentExtractionPage() {
+        // Update URL
+        window.history.pushState({page: 'patent-extraction'}, '', '/patent-entry-extraction.html');
+        
         const container = document.querySelector('.container');
         container.innerHTML = `
             <header class="header">
