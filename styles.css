@@ -1123,4 +1123,21 @@ body.scrollable {
         padding: 0.5rem 1rem;
         font-size: 0.875rem;
     }
+    
+    /* Mobile comparison view: Vertical layout (LLM top, PDF bottom) */
+    .comparison-content {
+        flex-direction: column !important;
+    }
+    
+    .llm-side {
+        order: 1;
+        width: 100% !important;
+        height: 50vh !important;
+    }
+    
+    .pdf-side {
+        order: 2;
+        width: 100% !important;
+        height: 50vh !important;
+    }
 }
