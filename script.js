@@ -37,6 +37,32 @@ class HistoryMindApp {
         }
     }
 
+    // Enable mobile PDF zoom handling
+    enableMobilePDFZoom() {
+        // Check if we're on a mobile device
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        if (isMobile) {
+            // Add touch event listeners to PDF iframes
+            document.addEventListener('touchstart', (e) => {
+                const iframe = e.target.closest('iframe');
+                if (iframe && (iframe.classList.contains('comparison-pdf-iframe') || iframe.classList.contains('pdf-fullscreen-iframe'))) {
+                    // Allow touch events on PDF iframes
+                    e.stopPropagation();
+                }
+            }, { passive: true });
+            
+            // Prevent page zoom when touching PDF areas
+            document.addEventListener('touchmove', (e) => {
+                const iframe = e.target.closest('iframe');
+                if (iframe && (iframe.classList.contains('comparison-pdf-iframe') || iframe.classList.contains('pdf-fullscreen-iframe'))) {
+                    // Allow touch move on PDF iframes
+                    e.stopPropagation();
+                }
+            }, { passive: true });
+        }
+    }
+
     bindEvents() {
         // Paper card click
         document.addEventListener('click', (e) => {
@@ -66,6 +92,9 @@ class HistoryMindApp {
                 document.body.scrollTop = 0;
             }, 100);
         });
+        
+        // Enable mobile PDF zoom handling
+        this.enableMobilePDFZoom();
     }
 
     handlePopState(event) {

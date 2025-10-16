@@ -1143,19 +1143,31 @@ body.scrollable {
     
     /* Enable PDF zooming on mobile without affecting page layout */
     .comparison-pdf-iframe {
-        touch-action: manipulation !important;
+        touch-action: pan-x pan-y pinch-zoom !important;
         -webkit-overflow-scrolling: touch !important;
         overflow: auto !important;
+        transform-origin: center center !important;
     }
     
     .pdf-fullscreen-iframe {
-        touch-action: manipulation !important;
+        touch-action: pan-x pan-y pinch-zoom !important;
         -webkit-overflow-scrolling: touch !important;
         overflow: auto !important;
+        transform-origin: center center !important;
     }
     
-    /* Prevent page zoom when interacting with PDF */
+    /* Enable zoom within PDF containers */
     .pdf-side-content, .pdf-fullscreen-viewer {
-        touch-action: manipulation !important;
+        touch-action: pan-x pan-y pinch-zoom !important;
+        overflow: hidden !important;
+        position: relative !important;
+    }
+    
+    /* Allow PDF iframe to handle its own zoom */
+    .pdf-side-content iframe, .pdf-fullscreen-viewer iframe {
+        touch-action: pan-x pan-y pinch-zoom !important;
+        pointer-events: auto !important;
+        -webkit-user-select: none !important;
+        user-select: none !important;
     }
 }
