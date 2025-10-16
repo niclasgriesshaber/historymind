@@ -1140,4 +1140,22 @@ body.scrollable {
         width: 100% !important;
         height: 50vh !important;
     }
+    
+    /* Enable PDF zooming on mobile without affecting page layout */
+    .comparison-pdf-iframe {
+        touch-action: manipulation !important;
+        -webkit-overflow-scrolling: touch !important;
+        overflow: auto !important;
+    }
+    
+    .pdf-fullscreen-iframe {
+        touch-action: manipulation !important;
+        -webkit-overflow-scrolling: touch !important;
+        overflow: auto !important;
+    }
+    
+    /* Prevent page zoom when interacting with PDF */
+    .pdf-side-content, .pdf-fullscreen-viewer {
+        touch-action: manipulation !important;
+    }
 }
