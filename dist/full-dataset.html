@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Full Dataset - HistoryMind</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="site-title">AI for Historical Dataset Construction:<br>Patent Statistics of the German Empire (1877 - 1918)</h1>
+        </header>
+        
+        <main class="main-content">
+            <div class="content-page">
+                <div class="content-items">
+                    <div class="content-item clickable" onclick="downloadCSV()">
+                        <span class="item-number-swapped">Download</span>
+                        <span class="item-text-swapped">CSV</span>
+                    </div>
+                    
+                    <div class="content-item clickable" onclick="downloadXLSX()">
+                        <span class="item-number-swapped">Download</span>
+                        <span class="item-text-swapped">XLSX</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js?v=6&t=1761251085731"></script>
+    <script>
+        function showDownloadWarning() {
+            // Create warning box
+            const warningBox = document.createElement('div');
+            warningBox.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: white;
+                border: 2px solid #e53e3e;
+                border-radius: 12px;
+                padding: 24px;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+                z-index: 10000;
+                max-width: 400px;
+                text-align: center;
+                font-family: 'Inter', sans-serif;
+            `;
+            
+            warningBox.innerHTML = `
+                <div style="color: #e53e3e; font-size: 18px; font-weight: 600; margin-bottom: 12px;">
+                    ⚠️ Sample Data Warning
+                </div>
+                <div style="color: #4a5568; font-size: 14px; line-height: 1.5; margin-bottom: 20px;">
+                    This is only a sample file and not the real dataset. The actual dataset will be available in the published research paper.
+                </div>
+                <button onclick="this.parentElement.remove(); document.querySelector('.warning-overlay').remove()" style="
+                    background: #e53e3e;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 6px;
+                    font-size: 14px;
+                    font-weight: 500;
+                    cursor: pointer;
+                    transition: background 0.2s;
+                " onmouseover="this.style.background='#c53030'" onmouseout="this.style.background='#e53e3e'">
+                    I Understand
+                </button>
+            `;
+            
+            // Add overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'warning-overlay';
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 9999;
+            `;
+            
+            overlay.onclick = () => {
+                warningBox.remove();
+                overlay.remove();
+            };
+            
+            document.body.appendChild(overlay);
+            document.body.appendChild(warningBox);
+        }
+
+        function downloadCSV() {
+            // Show warning message
+            showDownloadWarning();
+            
+            const csvContent = "Year,Patent_Count,Notes\n1878,1234,Sample data\n1879,1456,Sample data";
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'HistoryMind_Patent_Data.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        function downloadXLSX() {
+            // Show warning message
+            showDownloadWarning();
+            
+            const xlsxContent = "Year\tPatent_Count\tNotes\n1878\t1234\tSample data\n1879\t1456\tSample data";
+            const blob = new Blob([xlsxContent], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'HistoryMind_Patent_Data.xlsx';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

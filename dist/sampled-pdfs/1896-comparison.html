@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Patentamt 1896 Comparison - HistoryMind</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="comparison-container">
+            <div class="comparison-controls">
+                <div class="comparison-navigation">
+                    <button class="nav-btn prev-btn"  onclick="window.location.href='1895-comparison.html'" title="Previous PDF">
+                        ←
+                    </button>
+                    <span class="pdf-counter">19 of 41</span>
+                    <button class="nav-btn next-btn"  onclick="window.location.href='1897-comparison.html'" title="Next PDF">
+                        →
+                    </button>
+                </div>
+                <div class="comparison-info">
+                    <span class="comparison-filename">Patentamt_1896_sampled.pdf</span>
+                </div>
+                <div class="comparison-actions">
+                    <button class="close-comparison-btn" onclick="window.location.href='1896.html'">Close Comparison</button>
+                    <button class="back-btn" onclick="window.location.href='../sampled-pdfs.html'">Back to PDFs</button>
+                </div>
+            </div>
+            <div class="comparison-content">
+                <div class="pdf-side">
+                    <div class="pdf-side-header">
+                        <h3>PDF Preview</h3>
+                        <div class="pdf-controls">
+                            <button class="pdf-btn" onclick="decreasePDFZoom()" title="Zoom out">-</button>
+                            <span class="pdf-zoom-display">100%</span>
+                            <button class="pdf-btn" onclick="increasePDFZoom()" title="Zoom in">+</button>
+                        </div>
+                    </div>
+                    <div class="pdf-side-content">
+                        <iframe src="../data/sampled_pdfs/Patentamt_1896_sampled.pdf#page=1&view=FitH" class="comparison-pdf-iframe" type="application/pdf"></iframe>
+                    </div>
+                </div>
+                <div class="llm-side">
+                    <div class="llm-side-header">
+                        <h3>LLM-Generated Transcription</h3>
+                        <div class="font-controls">
+                            <button class="font-btn" onclick="decreaseFontSize()" title="Decrease font size">A-</button>
+                            <span class="font-size-display">100%</span>
+                            <button class="font-btn" onclick="increaseFontSize()" title="Increase font size">A+</button>
+                        </div>
+                    </div>
+                    <div class="llm-side-content">
+                        <div class="llm-transcription-data" id="llmContent">
+                            Loading LLM transcription data...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../script.js?v=6&t=1734567890"></script>
+    <script>
+        // Load LLM data for this specific PDF
+        async function loadLLMData() {
+            try {
+                const response = await fetch('../data/character_error_rate.html');
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // Find the section for Patentamt_1896_sampled.pdf
+                const sections = doc.querySelectorAll('.section');
+                let targetSection = null;
+                
+                for (const section of sections) {
+                    const title = section.querySelector('h2, h3');
+                    if (title && title.textContent.includes('Patentamt_1896_sampled.pdf')) {
+                        targetSection = section;
+                        break;
+                    }
+                }
+                
+                if (targetSection) {
+                    const llmContainer = targetSection.querySelector('.text-container .llm-header');
+                    if (llmContainer) {
+                        const llmTextContainer = llmContainer.parentElement.querySelector('.text-content');
+                        if (llmTextContainer) {
+                            let htmlContent = llmTextContainer.innerHTML;
+                            htmlContent = htmlContent.trim().replace(/^\s+/, '');
+                            
+                            const llmDisplay = document.getElementById('llmContent');
+                            llmDisplay.innerHTML = htmlContent;
+                            llmDisplay.style.cssText = 'text-indent: 0 !important; margin: 0 !important; padding: 0 !important; white-space: pre-wrap !important; font-family: inherit !important; line-height: 1.6 !important; text-align: left !important;';
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading LLM data:', error);
+                document.getElementById('llmContent').innerHTML = 'Error loading LLM transcription data';
+            }
+        }
+        
+        // Load data when page loads
+        loadLLMData();
+        
+        // Font size controls
+        let currentFontSize = 100;
+        
+        function increaseFontSize() {
+            currentFontSize = Math.min(currentFontSize + 10, 150);
+            updateFontSize();
+        }
+        
+        function decreaseFontSize() {
+            currentFontSize = Math.max(currentFontSize - 10, 80);
+            updateFontSize();
+        }
+        
+        function updateFontSize() {
+            const content = document.querySelector('.llm-transcription-data');
+            content.style.fontSize = currentFontSize + '%';
+            document.querySelector('.font-size-display').textContent = currentFontSize + '%';
+        }
+        
+        // PDF zoom controls
+        let currentZoom = 100;
+        
+        function increasePDFZoom() {
+            currentZoom = Math.min(currentZoom + 25, 300);
+            updatePDFZoom();
+        }
+        
+        function decreasePDFZoom() {
+            currentZoom = Math.max(currentZoom - 25, 75);
+            updatePDFZoom();
+        }
+        
+        function updatePDFZoom() {
+            const iframe = document.querySelector('.comparison-pdf-iframe');
+            iframe.src = iframe.src.split('#')[0] + `#page=1&zoom=${currentZoom}`;
+            document.querySelector('.pdf-zoom-display').textContent = currentZoom + '%';
+        }
+    </script>
+</body>
+</html>
