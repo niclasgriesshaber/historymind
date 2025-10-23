@@ -856,7 +856,72 @@ class HistoryMindApp {
         });
     }
 
+    showDownloadWarning() {
+        // Create warning box
+        const warningBox = document.createElement('div');
+        warningBox.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border: 2px solid #e53e3e;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            z-index: 10000;
+            max-width: 400px;
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+        `;
+        
+        warningBox.innerHTML = `
+            <div style="color: #e53e3e; font-size: 18px; font-weight: 600; margin-bottom: 12px;">
+                ⚠️ Sample Data Warning
+            </div>
+            <div style="color: #4a5568; font-size: 14px; line-height: 1.5; margin-bottom: 20px;">
+                This is only a sample file and not the real dataset. The actual dataset will be available in the published research paper.
+            </div>
+            <button onclick="this.parentElement.remove()" style="
+                background: #e53e3e;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 6px;
+                font-size: 14px;
+                font-weight: 500;
+                cursor: pointer;
+                transition: background 0.2s;
+            " onmouseover="this.style.background='#c53030'" onmouseout="this.style.background='#e53e3e'">
+                I Understand
+            </button>
+        `;
+        
+        // Add overlay
+        const overlay = document.createElement('div');
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        `;
+        
+        overlay.onclick = () => {
+            warningBox.remove();
+            overlay.remove();
+        };
+        
+        document.body.appendChild(overlay);
+        document.body.appendChild(warningBox);
+    }
+
     downloadCSV() {
+        // Show warning message
+        this.showDownloadWarning();
+        
         // Create a sample CSV file
         const csvContent = `patent_number,year,title,applicant,location,status
 12345,1878,"Improved Steam Engine","Johann Schmidt","Berlin","Granted"
@@ -877,6 +942,9 @@ class HistoryMindApp {
     }
 
     downloadXLSX() {
+        // Show warning message
+        this.showDownloadWarning();
+        
         // Create a sample XLSX file (simplified version)
         const xlsxContent = `patent_number,year,title,applicant,location,status
 12345,1878,"Improved Steam Engine","Johann Schmidt","Berlin","Granted"
