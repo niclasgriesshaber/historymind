@@ -237,7 +237,7 @@ class HistoryMindApp {
             <main class="main-content fade-in">
                 <div class="pdf-section">
                     <div class="pdf-header">
-                        <h2 class="pdf-section-title">Sampled PDFs and AI Transcriptions</h2>
+                        <h2 class="pdf-section-title">AI vs Perfect Transcriptions: Visual Comparison</h2>
                     </div>
                     
                     <div class="pdf-grid" id="pdfGrid">
@@ -470,17 +470,25 @@ class HistoryMindApp {
             const prevFile = currentIndex > 0 ? this.pdfFiles[currentIndex - 1] : null;
             const nextFile = currentIndex < this.pdfFiles.length - 1 ? this.pdfFiles[currentIndex + 1] : null;
 
-            const prevBtn = document.querySelector('.prev-btn');
-            const nextBtn = document.querySelector('.next-btn');
+            const prevBtn = document.querySelector('.pdf-navigation .prev-btn');
+            const nextBtn = document.querySelector('.pdf-navigation .next-btn');
 
             if (prevBtn) {
                 prevBtn.disabled = !prevFile;
-                prevBtn.onclick = prevFile ? () => app.smoothTransition(prevFile) : null;
+                if (prevFile) {
+                    prevBtn.onclick = () => app.smoothTransition(prevFile);
+                } else {
+                    prevBtn.onclick = null;
+                }
             }
 
             if (nextBtn) {
                 nextBtn.disabled = !nextFile;
-                nextBtn.onclick = nextFile ? () => app.smoothTransition(nextFile) : null;
+                if (nextFile) {
+                    nextBtn.onclick = () => app.smoothTransition(nextFile);
+                } else {
+                    nextBtn.onclick = null;
+                }
             }
 
             // Fade back in
@@ -560,7 +568,7 @@ class HistoryMindApp {
                     const llmContent = llmContainer.parentElement.querySelector('.text-content');
                     if (llmContent) {
                         // Create a clean LLM transcription display
-                        const llmData = this.createLLMTranscriptionDisplay(targetSection, llmContent.textContent);
+                        const llmData = this.createLLMTranscriptionDisplay(targetSection, llmContent);
                         this.showSideBySideComparison(filename, llmData);
                     } else {
                         alert(`No LLM transcription content found for ${filename}`);
@@ -577,7 +585,7 @@ class HistoryMindApp {
         }
     }
 
-    createLLMTranscriptionDisplay(section, llmContent) {
+    createLLMTranscriptionDisplay(section, llmContentElement) {
         // Extract the LLM transcription with original highlighting
         const llmContainer = section.querySelector('.text-container .llm-header');
         if (llmContainer) {
@@ -604,7 +612,7 @@ class HistoryMindApp {
         // Fallback to plain text if highlighting not found
         return `
             <div class="llm-transcription-only" style="text-indent: 0 !important; margin: 0 !important; padding: 0.5rem !important; white-space: pre-wrap; font-family: 'Courier New', monospace; line-height: 1.6; text-align: left !important;">
-                ${llmContent}
+                ${llmContentElement ? llmContentElement.textContent : ''}
             </div>
         `;
     }
@@ -654,7 +662,7 @@ class HistoryMindApp {
                             </div>
                         </div>
                         <div class="llm-side-content">
-                            <div class="llm-transcription-data">${llmData}</div>
+                            ${llmData}
                         </div>
                     </div>
                 </div>
@@ -664,7 +672,7 @@ class HistoryMindApp {
 
     async smoothComparisonTransition(filename) {
         const iframe = document.querySelector('.comparison-pdf-iframe');
-        const llmContent = document.querySelector('.llm-transcription-data');
+        const llmContent = document.querySelector('.llm-side-content');
         const filenameSpan = document.querySelector('.comparison-filename');
         const counterSpan = document.querySelector('.pdf-counter');
 
@@ -702,17 +710,25 @@ class HistoryMindApp {
                 const prevFile = currentIndex > 0 ? this.pdfFiles[currentIndex - 1] : null;
                 const nextFile = currentIndex < this.pdfFiles.length - 1 ? this.pdfFiles[currentIndex + 1] : null;
 
-                const prevBtn = document.querySelector('.prev-btn');
-                const nextBtn = document.querySelector('.next-btn');
+                const prevBtn = document.querySelector('.comparison-navigation .prev-btn');
+                const nextBtn = document.querySelector('.comparison-navigation .next-btn');
 
                 if (prevBtn) {
                     prevBtn.disabled = !prevFile;
-                    prevBtn.onclick = prevFile ? () => app.smoothComparisonTransition(prevFile) : null;
+                    if (prevFile) {
+                        prevBtn.onclick = () => app.smoothComparisonTransition(prevFile);
+                    } else {
+                        prevBtn.onclick = null;
+                    }
                 }
 
                 if (nextBtn) {
                     nextBtn.disabled = !nextFile;
-                    nextBtn.onclick = nextFile ? () => app.smoothComparisonTransition(nextFile) : null;
+                    if (nextFile) {
+                        nextBtn.onclick = () => app.smoothComparisonTransition(nextFile);
+                    } else {
+                        nextBtn.onclick = null;
+                    }
                 }
 
                 // Load new LLM transcription data
@@ -738,9 +754,11 @@ class HistoryMindApp {
                     if (llmContainer) {
                         const llmTextContainer = llmContainer.parentElement.querySelector('.text-content');
                         if (llmTextContainer) {
+                            let htmlContent = llmTextContainer.innerHTML.trim();
+                            htmlContent = htmlContent.replace(/^\s+/, '');
                             llmContent.innerHTML = `
-                                <div class="llm-transcription-only">
-                                    ${llmTextContainer.innerHTML}
+                                <div class="llm-transcription-only" style="text-indent: 0 !important; margin: 0 !important; padding: 0.5rem !important; white-space: pre-wrap; font-family: 'Courier New', monospace; line-height: 1.6; text-align: left !important;">
+                                    ${htmlContent}
                                 </div>
                             `;
                         }
