@@ -162,7 +162,7 @@ class HistoryMindApp {
         const container = document.querySelector('.container');
         container.innerHTML = `
             <header class="header">
-                <h1 class="site-title">Multimodal LLMs for Historical Dataset Construction from Archival Image Scans: German Patents (1877 - 1918)</h1>
+                <h1 class="site-title">Multimodal LLMs for Historical Dataset Construction from <span class="title-break">Archival Image Scans: German Patents (1877–1918)</span></h1>
             </header>
             
             <main class="main-content fade-in">
@@ -231,7 +231,7 @@ class HistoryMindApp {
         const container = document.querySelector('.container');
         container.innerHTML = `
             <header class="header">
-                <h1 class="site-title">Multimodal LLMs for Historical Dataset Construction from Archival Image Scans: German Patents (1877 - 1918)</h1>
+                <h1 class="site-title">Multimodal LLMs for Historical Dataset Construction from <span class="title-break">Archival Image Scans: German Patents (1877–1918)</span></h1>
             </header>
             
             <main class="main-content fade-in">
@@ -302,7 +302,7 @@ class HistoryMindApp {
         const container = document.querySelector('.container');
         container.innerHTML = `
             <header class="header">
-                <h1 class="site-title">Multimodal LLMs for Historical Dataset Construction from Archival Image Scans: German Patents (1877 - 1918)</h1>
+                <h1 class="site-title">Multimodal LLMs for Historical Dataset Construction from <span class="title-break">Archival Image Scans: German Patents (1877–1918)</span></h1>
             </header>
             
             <main class="main-content fade-in">
@@ -349,12 +349,12 @@ class HistoryMindApp {
         const container = document.querySelector('.container');
         container.innerHTML = `
             <header class="header">
-                <h1 class="site-title">Multimodal LLMs for Historical Dataset Construction from Archival Image Scans: German Patents (1877 - 1918)</h1>
+                <h1 class="site-title">Multimodal LLMs for Historical Dataset Construction from <span class="title-break">Archival Image Scans: German Patents (1877–1918)</span></h1>
             </header>
             
             <main class="main-content fade-in">
                 <div class="content-page">
-                    <h2 class="content-title">Patent Entry Extraction based on Archival Image Scans</h2>
+                    <h2 class="content-title">Patent Entry Extraction based on Image Scans</h2>
                     
                     <div class="content-items">
                         <div class="content-item clickable" onclick="app.showPatentMatchingBefore()">
@@ -494,7 +494,7 @@ class HistoryMindApp {
         const container = document.querySelector('.container');
         container.innerHTML = `
             <header class="header">
-                <h1 class="site-title">Multimodal LLMs for Historical Dataset Construction from Archival Image Scans: German Patents (1877 - 1918)</h1>
+                <h1 class="site-title">Multimodal LLMs for Historical Dataset Construction from <span class="title-break">Archival Image Scans: German Patents (1877–1918)</span></h1>
             </header>
             
             <main class="main-content">
