@@ -176,7 +176,7 @@ class HistoryMindApp {
                     <div class="content-items">
                         <div class="content-item clickable" onclick="app.showSampledPDFs()">
                             <div class="item-number">📄</div>
-                            <div class="item-text">AI vs Perfect Transcriptions: Visual Comparison</div>
+                            <div class="item-text">AI vs Perfect Transcriptions: <span class="mobile-break"><br></span>Visual Comparison</div>
                         </div>
                         
                         <div class="content-item clickable" onclick="app.showCharacterErrorPage()">
@@ -186,12 +186,12 @@ class HistoryMindApp {
                         
                         <div class="content-item clickable" onclick="app.showPatentExtractionPage()">
                             <div class="item-number">2.</div>
-                            <div class="item-text">Patent Entry Extraction based on Archival Image Scans</div>
+                            <div class="item-text">Patent Entry Extraction based on <span class="mobile-break"><br></span>Archival Image Scans</div>
                         </div>
                         
                         <div class="content-item clickable" onclick="app.showVariableExtractionPage()">
                             <div class="item-number">3.</div>
-                            <div class="item-text">Variable Extraction based on extracted Patent Entries</div>
+                            <div class="item-text">Variable Extraction based on extracted <span class="mobile-break"><br></span>Patent Entries</div>
                         </div>
                         
                     </div>
@@ -251,7 +251,7 @@ class HistoryMindApp {
             <main class="main-content fade-in">
                 <div class="pdf-section">
                     <div class="pdf-header">
-                        <h2 class="pdf-section-title">AI vs Perfect Transcriptions: Visual Comparison</h2>
+                        <h2 class="pdf-section-title">AI vs Perfect Transcriptions: <span class="mobile-break"><br></span>Visual Comparison</h2>
                     </div>
                     
                     <div class="pdf-grid" id="pdfGrid">
@@ -375,12 +375,12 @@ class HistoryMindApp {
                     <div class="content-items">
                         <div class="content-item clickable" onclick="app.showPatentMatchingBefore()">
                             <div class="item-number">a.</div>
-                            <div class="item-text">Patent Entry Matching before Repairing Page Breaks</div>
+                            <div class="item-text">Patent Entry Matching before <span class="mobile-break"><br></span>Repairing Page Breaks</div>
                         </div>
                         
                         <div class="content-item clickable" onclick="app.showPatentMatchingAfter()">
                             <div class="item-number">b.</div>
-                            <div class="item-text">Patent Entry Matching after Repairing Page Breaks</div>
+                            <div class="item-text">Patent Entry Matching after <span class="mobile-break"><br></span>Repairing Page Breaks</div>
                         </div>
                     </div>
                 </div>
@@ -451,7 +451,7 @@ class HistoryMindApp {
                     </div>
                     <div class="pdf-actions">
                         <button class="compare-btn" onclick="app.showComparison('${filename}')">Compare with LLM Transcriptions</button>
-                        <button class="back-btn" onclick="window.location.replace('/sampled-pdfs.html')">Back to PDFs</button>
+                        <button class="back-btn" onclick="window.location.replace('/sampled-pdfs.html')">Back to Home</button>
                     </div>
                 </div>
                 <div class="pdf-fullscreen-viewer">
@@ -680,7 +680,7 @@ class HistoryMindApp {
                     </div>
                     <div class="comparison-actions">
                         <button class="close-comparison-btn" onclick="app.showPDFOnly('${filename}')">Close Comparison</button>
-                        <button class="back-btn" onclick="window.location.replace('/sampled-pdfs.html')">Back to PDFs</button>
+                        <button class="back-btn" onclick="window.location.replace('/sampled-pdfs.html')">Back to Home</button>
                     </div>
                 </div>
                 <div class="comparison-content">

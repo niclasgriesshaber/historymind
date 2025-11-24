@@ -590,6 +590,7 @@ body.scrollable {
     border: none;
     flex: 1;
     min-height: 0;
+    touch-action: manipulation; /* Enable pinch-to-zoom on mobile */
 }
 
 .pdf-fullscreen-viewer {
@@ -731,8 +732,8 @@ body.scrollable {
     .pdf-controls,
     .comparison-controls {
         flex-direction: column;
-        padding: 1rem;
-        gap: 1rem;
+        padding: 0.5rem;
+        gap: 0.5rem;
     }
 
     .comparison-navigation {
@@ -775,6 +776,12 @@ body.scrollable {
         height: 50%;
         border-right: none;
         border-bottom: 1px solid var(--color-border);
+    }
+    
+    .pdf-side-header,
+    .llm-side-header {
+        padding: 0.5rem 1rem;
+        height: 45px;
     }
 }
 
