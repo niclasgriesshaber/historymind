@@ -393,8 +393,15 @@ class HistoryMindApp {
         // Automatically open comparison view instead of just PDF preview
         const year = filename.match(/Patentamt_(\d{4})_sampled\.pdf/)[1];
         
-        // Update URL and show comparison
-        window.history.pushState({ page: 'comparison', year: year }, '', `/comparison/${year}`);
+        // Check if we came from an individual year page and replace that history entry
+        const currentPath = window.location.pathname;
+        if (currentPath.startsWith('/sampled-pdfs/') && currentPath.match(/\/\d+\.html$/)) {
+            // We came from an individual year page, replace it in history
+            window.history.replaceState({ page: 'comparison', year: year }, '', `/comparison/${year}`);
+        } else {
+            // Otherwise, push a new state (e.g., coming from year tiles page)
+            window.history.pushState({ page: 'comparison', year: year }, '', `/comparison/${year}`);
+        }
         this.showComparison(filename);
     }
 
@@ -533,6 +540,16 @@ class HistoryMindApp {
 
     async showComparison(filename) {
         const year = filename.match(/Patentamt_(\d{4})_sampled\.pdf/)[1];
+
+        // Check if we came from an individual year page and replace that history entry
+        const currentPath = window.location.pathname;
+        if (currentPath.startsWith('/sampled-pdfs/') && currentPath.match(/\/\d+\.html$/)) {
+            // We came from an individual year page, replace it in history
+            window.history.replaceState({ page: 'comparison', year: year }, '', `/comparison/${year}`);
+        } else {
+            // Otherwise, push a new state (e.g., coming from year tiles page)
+            window.history.pushState({ page: 'comparison', year: year }, '', `/comparison/${year}`);
+        }
 
         // Disable scrolling on comparison view
         this.setPageScrollable(false);

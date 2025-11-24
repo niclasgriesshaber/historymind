@@ -136,7 +136,7 @@ body.scrollable {
     font-family: var(--font-serif);
     font-size: 1.25rem;
     font-weight: 600;
-    color: var(--color-text-muted);
+    color: var(--color-primary);
     text-align: center;
     margin-top: 2rem;
     margin-bottom: 3rem;
