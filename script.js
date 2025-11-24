@@ -449,7 +449,7 @@ class HistoryMindApp {
                     </div>
                     <div class="pdf-actions">
                         <button class="compare-btn" onclick="app.showComparison('${filename}')">Compare with LLM Transcriptions</button>
-                        <button class="back-btn" onclick="window.history.back()">Back to PDFs</button>
+                        <button class="back-btn" onclick="window.location.replace('/sampled-pdfs.html')">Back to PDFs</button>
                     </div>
                 </div>
                 <div class="pdf-fullscreen-viewer">
@@ -678,7 +678,7 @@ class HistoryMindApp {
                     </div>
                     <div class="comparison-actions">
                         <button class="close-comparison-btn" onclick="app.showPDFOnly('${filename}')">Close Comparison</button>
-                        <button class="back-btn" onclick="window.history.back()">Back to PDFs</button>
+                        <button class="back-btn" onclick="window.location.replace('/sampled-pdfs.html')">Back to PDFs</button>
                     </div>
                 </div>
                 <div class="comparison-content">
