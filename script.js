@@ -176,7 +176,7 @@ class HistoryMindApp {
                     <div class="content-items">
                         <div class="content-item clickable" onclick="app.showSampledPDFs()">
                             <div class="item-number">📄</div>
-                            <div class="item-text">AI vs Perfect Transcriptions:<br class="mobile-break">Visual Comparison</div>
+                            <div class="item-text">AI vs Perfect Transcriptions:<br class="mobile-break"> Visual Comparison</div>
                         </div>
                         
                         <div class="content-item clickable" onclick="app.showCharacterErrorPage()">
@@ -251,7 +251,7 @@ class HistoryMindApp {
             <main class="main-content fade-in">
                 <div class="pdf-section">
                     <div class="pdf-header">
-                        <h2 class="pdf-section-title">AI vs Perfect Transcriptions:<br class="mobile-break">Visual Comparison</h2>
+                        <h2 class="pdf-section-title">AI vs Perfect Transcriptions:<br class="mobile-break"> Visual Comparison</h2>
                     </div>
                     
                     <div class="pdf-grid" id="pdfGrid">
