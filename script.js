@@ -245,6 +245,7 @@ class HistoryMindApp {
         container.innerHTML = `
             <header class="header">
                 <h1 class="site-title">Multimodal LLMs for Historical Dataset Construction from <span class="title-break">Archival Image Scans: German Patents (1877–1918)</span></h1>
+                <div class="site-authors">Niclas Griesshaber & Jochen Streb</div>
             </header>
             
             <main class="main-content fade-in">
@@ -316,6 +317,7 @@ class HistoryMindApp {
         container.innerHTML = `
             <header class="header">
                 <h1 class="site-title">Multimodal LLMs for Historical Dataset Construction from <span class="title-break">Archival Image Scans: German Patents (1877–1918)</span></h1>
+                <div class="site-authors">Niclas Griesshaber & Jochen Streb</div>
             </header>
             
             <main class="main-content fade-in">
