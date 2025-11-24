@@ -72,7 +72,7 @@ body.scrollable {
     z-index: 1000;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     height: auto;
-    min-height: 80px;
+    min-height: 120px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -120,8 +120,8 @@ body.scrollable {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 100px 0 2rem 0;
-    min-height: calc(100vh - 100px);
+    padding: 140px 0 2rem 0;
+    min-height: calc(100vh - 140px);
     width: 100%;
 }
 
@@ -693,7 +693,7 @@ body.scrollable {
 
     .header {
         padding: 1rem 0;
-        min-height: 80px;
+        min-height: 120px;
     }
 
     .site-title {
@@ -706,8 +706,8 @@ body.scrollable {
     }
 
     .main-content {
-        padding: 100px 0 2rem 0;
-        min-height: calc(100vh - 100px);
+        padding: 140px 0 2rem 0;
+        min-height: calc(100vh - 140px);
     }
 
     .content-items {
