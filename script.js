@@ -61,9 +61,9 @@ class HistoryMindApp {
     }
 
     bindEvents() {
-        // Paper card click
+        // Paper card click and title click
         document.addEventListener('click', (e) => {
-            if (e.target.closest('.paper-card')) {
+            if (e.target.closest('.paper-card') || e.target.closest('.site-title')) {
                 e.preventDefault();
                 this.showHomePage();
             }
@@ -110,6 +110,11 @@ class HistoryMindApp {
         } else if (path === '/patent-entry-extraction.html') {
             this.setPageScrollable(false); // Disable scrolling on patent extraction page
             this.showPatentExtractionContent();
+        } else if (path.startsWith('/comparison/')) {
+            this.setPageScrollable(false); // Disable scrolling on comparison pages
+            const year = path.match(/\/comparison\/(\d+)/)[1];
+            const filename = `Patentamt_${year}_sampled.pdf`;
+            this.showComparison(filename);
         } else if (path.startsWith('/sampled-pdfs/') && path.includes('-comparison.html')) {
             this.setPageScrollable(false); // Disable scrolling on comparison pages
             const year = path.match(/\/sampled-pdfs\/(\d+)-comparison\.html/)[1];
@@ -163,6 +168,7 @@ class HistoryMindApp {
         container.innerHTML = `
             <header class="header">
                 <h1 class="site-title">Multimodal LLMs for Historical Dataset Construction from <span class="title-break">Archival Image Scans: German Patents (1877–1918)</span></h1>
+                <div class="site-authors">Niclas Griesshaber & Jochen Streb</div>
             </header>
             
             <main class="main-content fade-in">
@@ -350,6 +356,7 @@ class HistoryMindApp {
         container.innerHTML = `
             <header class="header">
                 <h1 class="site-title">Multimodal LLMs for Historical Dataset Construction from <span class="title-break">Archival Image Scans: German Patents (1877–1918)</span></h1>
+                <div class="site-authors">Niclas Griesshaber & Jochen Streb</div>
             </header>
             
             <main class="main-content fade-in">
@@ -384,6 +391,10 @@ class HistoryMindApp {
 
     showPDFPreview(filename) {
         // Automatically open comparison view instead of just PDF preview
+        const year = filename.match(/Patentamt_(\d{4})_sampled\.pdf/)[1];
+        
+        // Update URL and show comparison
+        window.history.pushState({ page: 'comparison', year: year }, '', `/comparison/${year}`);
         this.showComparison(filename);
     }
 
@@ -428,7 +439,7 @@ class HistoryMindApp {
                     </div>
                 </div>
                 <div class="pdf-fullscreen-viewer">
-                    <iframe src="data/sampled_pdfs/${filename}?t=${Date.now()}#page=1&view=FitH&zoom=${this.isMobile ? '200' : '100'}&toolbar=1&navpanes=0&scrollbar=1" class="pdf-fullscreen-iframe" type="application/pdf"></iframe>
+                    <iframe src="/data/sampled_pdfs/${filename}?t=${Date.now()}#page=1&view=FitH&zoom=${this.isMobile ? '200' : '100'}&toolbar=1&navpanes=0&scrollbar=1" class="pdf-fullscreen-iframe" type="application/pdf"></iframe>
                 </div>
             </div>
         `;
@@ -539,8 +550,11 @@ class HistoryMindApp {
         }, 0);
 
         try {
-            // Fetch the character error rate HTML
-            const response = await fetch('data/character_error_rate.html');
+            // Fetch the character error rate HTML (use absolute path to work from any URL)
+            const response = await fetch('/data/character_error_rate.html');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const html = await response.text();
 
             // Parse the HTML to extract the specific year's LLM transcription
@@ -649,7 +663,7 @@ class HistoryMindApp {
                             <h3>PDF</h3>
                         </div>
                         <div class="pdf-side-content">
-                            <iframe src="data/sampled_pdfs/${filename}?t=${Date.now()}#page=1&view=FitH&zoom=${this.isMobile ? '200' : '100'}&toolbar=1&navpanes=0&scrollbar=1" class="comparison-pdf-iframe" type="application/pdf"></iframe>
+                            <iframe src="/data/sampled_pdfs/${filename}?t=${Date.now()}#page=1&view=FitH&zoom=${this.isMobile ? '200' : '100'}&toolbar=1&navpanes=0&scrollbar=1" class="comparison-pdf-iframe" type="application/pdf"></iframe>
                         </div>
                     </div>
                     <div class="llm-side">
@@ -671,6 +685,11 @@ class HistoryMindApp {
     }
 
     async smoothComparisonTransition(filename) {
+        const year = filename.match(/Patentamt_(\d{4})_sampled\.pdf/)[1];
+        
+        // Update URL
+        window.history.replaceState({ page: 'comparison', year: year }, '', `/comparison/${year}`);
+        
         const iframe = document.querySelector('.comparison-pdf-iframe');
         const llmContent = document.querySelector('.llm-side-content');
         const filenameSpan = document.querySelector('.comparison-filename');
@@ -698,8 +717,8 @@ class HistoryMindApp {
 
         setTimeout(async () => {
             try {
-                // Update iframe source
-                iframe.src = `data/sampled_pdfs/${filename}?t=${Date.now()}#page=1&view=FitH&zoom=${this.isMobile ? '200' : '100'}&toolbar=1&navpanes=0&scrollbar=1`;
+                // Update iframe source (use absolute path)
+                iframe.src = `/data/sampled_pdfs/${filename}?t=${Date.now()}#page=1&view=FitH&zoom=${this.isMobile ? '200' : '100'}&toolbar=1&navpanes=0&scrollbar=1`;
 
                 // Update filename and counter
                 const currentIndex = this.pdfFiles.indexOf(filename);
