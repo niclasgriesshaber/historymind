@@ -213,8 +213,15 @@ class HistoryMindApp {
 
 
     showSampledPDFs() {
-        // Update URL
-        window.history.pushState({ page: 'sampled-pdfs' }, '', '/sampled-pdfs.html');
+        // Check if we're coming from a comparison page - if so, replace history instead of pushing
+        const currentPath = window.location.pathname;
+        if (currentPath.startsWith('/comparison/')) {
+            // Replace the comparison page entry with sampled-pdfs
+            window.history.replaceState({ page: 'sampled-pdfs' }, '', '/sampled-pdfs.html');
+        } else {
+            // Otherwise, push a new state
+            window.history.pushState({ page: 'sampled-pdfs' }, '', '/sampled-pdfs.html');
+        }
 
         // Enable scrolling on Sampled PDFs page (year tiles)
         this.setPageScrollable(true);
