@@ -686,8 +686,18 @@ body.scrollable {
     text-align: center;
 }
 
+/* Mobile line breaks - hidden on desktop, shown on mobile */
+.mobile-break {
+    display: none;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
+    /* Show mobile line breaks */
+    .mobile-break {
+        display: inline;
+    }
+
     .container {
         padding: 1rem;
     }
