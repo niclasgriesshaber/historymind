@@ -778,7 +778,7 @@ class HistoryMindApp {
 
                 // Load new LLM transcription data
                 const year = filename.match(/Patentamt_(\d{4})_sampled\.pdf/)[1];
-                const response = await fetch('data/character_error_rate.html');
+                const response = await fetch('/data/character_error_rate.html');
                 const html = await response.text();
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
