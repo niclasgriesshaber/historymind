@@ -33,7 +33,7 @@
                 </div>
                 <div class="comparison-actions">
                     <button class="close-comparison-btn" onclick="window.location.href='1902.html'">Close Comparison</button>
-                    <button class="back-btn" onclick="navigateBackToPDFs('1902')">Back to PDFs</button>
+                    <button class="back-btn" onclick="window.location.replace('../sampled-pdfs.html')">Back to PDFs</button>
                 </div>
             </div>
             <div class="comparison-content">
@@ -68,12 +68,6 @@
             </div>
         </div>
     </div>
-    <script>
-        function navigateBackToPDFs(currentYear) {
-            // Just go to sampled-pdfs.html directly, replacing current page
-            window.location.replace('../sampled-pdfs.html');
-        }
-    </script>
     <script src="../script.js?v=6&t=1734567890"></script>
     <script>
         // Load LLM data for this specific PDF
