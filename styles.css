@@ -472,6 +472,7 @@ body.scrollable {
     min-width: 0;
 }
 
+.pdf-actions,
 .comparison-actions {
     display: flex;
     gap: 1rem;
