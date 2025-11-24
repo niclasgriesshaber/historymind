@@ -299,7 +299,7 @@ body.scrollable {
 .pdf-header h3,
 .pdf-section-title {
     font-family: var(--font-serif);
-    font-size: 2rem;
+    font-size: 1.25rem;
     font-weight: 600;
     color: var(--color-primary);
     margin: 0;
@@ -534,12 +534,13 @@ body.scrollable {
 .llm-side-header {
     background: #f8fafc;
     padding: 1rem 1.5rem;
+    padding-bottom: 0;
     border-bottom: 1px solid var(--color-border);
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-shrink: 0;
-    min-height: 60px;
+    height: 60px;
     box-sizing: border-box;
 }
 
@@ -552,6 +553,9 @@ body.scrollable {
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--color-text-muted);
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
 }
 
 .pdf-side-content,
@@ -608,24 +612,28 @@ body.scrollable {
 
 /* Highlighting styles for LLM transcriptions */
 .llm-transcription-only .diff-highlight-perfect {
-    background-color: rgba(255, 193, 7, 0.3);
-    padding: 0;
-    border-radius: 1px;
+    background-color: #ffeb3b;
+    padding: 2px 0;
+    border-radius: 2px;
     display: inline;
+    font-weight: 500;
 }
 
 .llm-transcription-only .diff-highlight-llm {
-    background-color: rgba(33, 150, 243, 0.3);
-    padding: 0;
-    border-radius: 1px;
+    background-color: #ffeb3b;
+    padding: 2px 0;
+    border-radius: 2px;
     display: inline;
+    font-weight: 500;
 }
 
 .llm-transcription-only .diff-highlight-student {
-    background-color: rgba(244, 67, 54, 0.3);
-    padding: 0;
-    border-radius: 1px;
+    background-color: #f44336;
+    color: white;
+    padding: 2px 0;
+    border-radius: 2px;
     display: inline;
+    font-weight: 500;
 }
 
 /* Font Controls */

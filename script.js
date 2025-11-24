@@ -646,7 +646,7 @@ class HistoryMindApp {
                 <div class="comparison-content">
                     <div class="pdf-side">
                         <div class="pdf-side-header">
-                            <h3>PDF Preview</h3>
+                            <h3>PDF</h3>
                         </div>
                         <div class="pdf-side-content">
                             <iframe src="data/sampled_pdfs/${filename}?t=${Date.now()}#page=1&view=FitH&zoom=${this.isMobile ? '200' : '100'}&toolbar=1&navpanes=0&scrollbar=1" class="comparison-pdf-iframe" type="application/pdf"></iframe>
