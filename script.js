@@ -375,12 +375,12 @@ class HistoryMindApp {
                     <div class="content-items">
                         <div class="content-item clickable" onclick="app.showPatentMatchingBefore()">
                             <div class="item-number">a.</div>
-                            <div class="item-text">Patent Entry Matching before<br class="mobile-break">Repairing Page Breaks</div>
+                            <div class="item-text">Patent Entry Matching before<br class="mobile-break"> Repairing Page Breaks</div>
                         </div>
                         
                         <div class="content-item clickable" onclick="app.showPatentMatchingAfter()">
                             <div class="item-number">b.</div>
-                            <div class="item-text">Patent Entry Matching after<br class="mobile-break">Repairing Page Breaks</div>
+                            <div class="item-text">Patent Entry Matching after<br class="mobile-break"> Repairing Page Breaks</div>
                         </div>
                     </div>
                 </div>
