@@ -418,6 +418,10 @@ class HistoryMindApp {
         const currentIndex = this.pdfFiles.indexOf(filename);
         const prevFile = currentIndex > 0 ? this.pdfFiles[currentIndex - 1] : null;
         const nextFile = currentIndex < this.pdfFiles.length - 1 ? this.pdfFiles[currentIndex + 1] : null;
+        const year = filename.match(/Patentamt_(\d{4})_sampled\.pdf/)[1];
+
+        // Update URL to reflect PDF-only view (replace comparison URL if applicable)
+        window.history.replaceState({ page: 'pdf', year: year }, '', `/sampled-pdfs/${year}.html`);
 
         // Disable scrolling on PDF-only view
         this.setPageScrollable(false);
@@ -485,8 +489,12 @@ class HistoryMindApp {
         iframe.style.transition = 'opacity 0.2s ease';
 
         setTimeout(() => {
-            // Update iframe source
-            iframe.src = `data/sampled_pdfs/${filename}?t=${Date.now()}#page=1&view=FitH&zoom=${this.isMobile ? '200' : '100'}&toolbar=1&navpanes=0&scrollbar=1`;
+            // Update URL to reflect current PDF
+            const year = filename.match(/Patentamt_(\d{4})_sampled\.pdf/)[1];
+            window.history.replaceState({ page: 'pdf', year: year }, '', `/sampled-pdfs/${year}.html`);
+
+            // Update iframe source (use absolute path to work from any URL)
+            iframe.src = `/data/sampled_pdfs/${filename}?t=${Date.now()}#page=1&view=FitH&zoom=${this.isMobile ? '200' : '100'}&toolbar=1&navpanes=0&scrollbar=1`;
 
             // Update filename and counter
             const currentIndex = this.pdfFiles.indexOf(filename);

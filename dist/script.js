@@ -41,14 +41,14 @@ class HistoryMindApp {
     enableMobilePDFZoom() {
         // Check if we're on a mobile device
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        
+
         if (isMobile) {
             // Add a class to body for mobile-specific styling
             document.body.classList.add('mobile-device');
-            
+
             // Store mobile flag for use in PDF URL generation
             this.isMobile = true;
-            
+
             // Add touch event listeners to PDF containers for better mobile handling
             document.addEventListener('touchstart', (e) => {
                 const pdfContainer = e.target.closest('.pdf-side-content, .pdf-fullscreen-viewer');
@@ -61,9 +61,9 @@ class HistoryMindApp {
     }
 
     bindEvents() {
-        // Paper card click
+        // Paper card click and title click
         document.addEventListener('click', (e) => {
-            if (e.target.closest('.paper-card')) {
+            if (e.target.closest('.paper-card') || e.target.closest('.site-title')) {
                 e.preventDefault();
                 this.showHomePage();
             }
@@ -73,14 +73,14 @@ class HistoryMindApp {
         window.addEventListener('popstate', (e) => {
             this.handlePopState(e);
         });
-        
+
         // Ensure scroll position is correct on page load (mobile fix)
         window.addEventListener('load', () => {
             window.scrollTo(0, 0);
             document.documentElement.scrollTop = 0;
             document.body.scrollTop = 0;
         });
-        
+
         // Handle orientation change on mobile
         window.addEventListener('orientationchange', () => {
             setTimeout(() => {
@@ -89,7 +89,7 @@ class HistoryMindApp {
                 document.body.scrollTop = 0;
             }, 100);
         });
-        
+
         // Enable mobile PDF zoom handling
         this.enableMobilePDFZoom();
     }
@@ -97,7 +97,7 @@ class HistoryMindApp {
     handlePopState(event) {
         // Get the current path and navigate accordingly
         const path = window.location.pathname;
-        
+
         if (path === '/' || path === '/index.html') {
             this.setPageScrollable(false); // Disable scrolling on home page
             this.showHomePageContent();
@@ -110,6 +110,11 @@ class HistoryMindApp {
         } else if (path === '/patent-entry-extraction.html') {
             this.setPageScrollable(false); // Disable scrolling on patent extraction page
             this.showPatentExtractionContent();
+        } else if (path.startsWith('/comparison/')) {
+            this.setPageScrollable(false); // Disable scrolling on comparison pages
+            const year = path.match(/\/comparison\/(\d+)/)[1];
+            const filename = `Patentamt_${year}_sampled.pdf`;
+            this.showComparison(filename);
         } else if (path.startsWith('/sampled-pdfs/') && path.includes('-comparison.html')) {
             this.setPageScrollable(false); // Disable scrolling on comparison pages
             const year = path.match(/\/sampled-pdfs\/(\d+)-comparison\.html/)[1];
@@ -123,12 +128,12 @@ class HistoryMindApp {
             this.setPageScrollable(false); // Disable scrolling on home page
             this.showHomePageContent();
         }
-        
+
         // Reset scroll position immediately (handles mobile Safari)
         window.scrollTo(0, 0);
         document.documentElement.scrollTop = 0;
         document.body.scrollTop = 0;
-        
+
         // Force scroll reset on mobile
         setTimeout(() => {
             window.scrollTo(0, 0);
@@ -139,17 +144,17 @@ class HistoryMindApp {
 
     showHomePage() {
         // Update URL
-        window.history.pushState({page: 'home'}, '', '/');
-        
+        window.history.pushState({ page: 'home' }, '', '/');
+
         // Disable scrolling on home page
         this.setPageScrollable(false);
-        
+
         this.showHomePageContent();
         // Reset scroll position immediately (handles mobile Safari)
         window.scrollTo(0, 0);
         document.documentElement.scrollTop = 0;
         document.body.scrollTop = 0;
-        
+
         // Force scroll reset on mobile
         setTimeout(() => {
             window.scrollTo(0, 0);
@@ -162,37 +167,44 @@ class HistoryMindApp {
         const container = document.querySelector('.container');
         container.innerHTML = `
             <header class="header">
-                <h1 class="site-title">AI for Historical Dataset Construction:<br>Patent Statistics of the German Empire (1877 - 1918)</h1>
+                <h1 class="site-title">Multimodal LLMs for Historical Dataset Construction from <span class="title-break">Archival Image Scans: German Patents (1877–1918)</span></h1>
+                <div class="site-authors">Niclas Griesshaber & Jochen Streb</div>
             </header>
             
-            <main class="main-content">
+            <main class="main-content fade-in">
                 <div class="content-page">
                     <div class="content-items">
                         <div class="content-item clickable" onclick="app.showSampledPDFs()">
-                            <span class="item-number">📁</span>
-                            <span class="item-text">Sampled PDFs and AI Transcriptions</span>
+                            <div class="item-number">📄</div>
+                            <div class="item-text">AI vs Perfect Transcriptions:<span class="mobile-break"><br></span> Visual Comparison</div>
                         </div>
                         
                         <div class="content-item clickable" onclick="app.showCharacterErrorPage()">
-                            <span class="item-number">1.</span>
-                            <span class="item-text">Character Error Rate</span>
+                            <div class="item-number">1.</div>
+                            <div class="item-text">Character Error Rate</div>
                         </div>
                         
                         <div class="content-item clickable" onclick="app.showPatentExtractionPage()">
-                            <span class="item-number">2.</span>
-                            <span class="item-text">Patent Entry Extraction based on Archival Image Scans</span>
+                            <div class="item-number">2.</div>
+                            <div class="item-text">Patent Entry Extraction based on<span class="mobile-break"><br></span> Archival Image Scans</div>
                         </div>
                         
                         <div class="content-item clickable" onclick="app.showVariableExtractionPage()">
-                            <span class="item-number">3.</span>
-                            <span class="item-text">Variable Extraction based on extracted Patent Entries</span>
+                            <div class="item-number">3.</div>
+                            <div class="item-text">Variable Extraction based on extracted<span class="mobile-break"><br></span> Patent Entries</div>
                         </div>
                         
-                        <div class="content-item clickable" onclick="app.showFullDatasetOptions()">
-                            <span class="item-number">📁</span>
-                            <span class="item-text">Full Dataset</span>
-                        </div>
                     </div>
+                    
+                    <div class="dataset-separator">
+                        <span class="dataset-label">Output</span>
+                    </div>
+                    
+                    <div class="dataset-item clickable" onclick="app.showFullDatasetOptions()">
+                        <div class="item-text">Full Dataset</div>
+                        <div class="item-number">📁</div>
+                    </div>
+                </div>
                 </div>
             </main>
         `;
@@ -201,18 +213,25 @@ class HistoryMindApp {
 
 
     showSampledPDFs() {
-        // Update URL
-        window.history.pushState({page: 'sampled-pdfs'}, '', '/sampled-pdfs.html');
-        
+        // Check if we're coming from a comparison page - if so, replace history instead of pushing
+        const currentPath = window.location.pathname;
+        if (currentPath.startsWith('/comparison/')) {
+            // Replace the comparison page entry with sampled-pdfs
+            window.history.replaceState({ page: 'sampled-pdfs' }, '', '/sampled-pdfs.html');
+        } else {
+            // Otherwise, push a new state
+            window.history.pushState({ page: 'sampled-pdfs' }, '', '/sampled-pdfs.html');
+        }
+
         // Enable scrolling on Sampled PDFs page (year tiles)
         this.setPageScrollable(true);
-        
+
         this.showSampledPDFsContent();
         // Reset scroll position immediately (handles mobile Safari)
         window.scrollTo(0, 0);
         document.documentElement.scrollTop = 0;
         document.body.scrollTop = 0;
-        
+
         // Force scroll reset on mobile
         setTimeout(() => {
             window.scrollTo(0, 0);
@@ -225,13 +244,14 @@ class HistoryMindApp {
         const container = document.querySelector('.container');
         container.innerHTML = `
             <header class="header">
-                <h1 class="site-title">AI for Historical Dataset Construction:<br>Patent Statistics of the German Empire (1877 - 1918)</h1>
+                <h1 class="site-title">Multimodal LLMs for Historical Dataset Construction from <span class="title-break">Archival Image Scans: German Patents (1877–1918)</span></h1>
+                <div class="site-authors">Niclas Griesshaber & Jochen Streb</div>
             </header>
             
-            <main class="main-content">
+            <main class="main-content fade-in">
                 <div class="pdf-section">
                     <div class="pdf-header">
-                        <h2 class="pdf-section-title">Sampled PDFs and AI Transcriptions</h2>
+                        <h2 class="pdf-section-title">AI vs Perfect Transcriptions:<span class="mobile-break"><br></span> Visual Comparison</h2>
                     </div>
                     
                     <div class="pdf-grid" id="pdfGrid">
@@ -273,17 +293,17 @@ class HistoryMindApp {
 
     showFullDatasetOptions() {
         // Update URL
-        window.history.pushState({page: 'full-dataset'}, '', '/full-dataset.html');
-        
+        window.history.pushState({ page: 'full-dataset' }, '', '/full-dataset.html');
+
         // Disable scrolling on full dataset page
         this.setPageScrollable(false);
-        
+
         this.showFullDatasetContent();
         // Reset scroll position immediately (handles mobile Safari)
         window.scrollTo(0, 0);
         document.documentElement.scrollTop = 0;
         document.body.scrollTop = 0;
-        
+
         // Force scroll reset on mobile
         setTimeout(() => {
             window.scrollTo(0, 0);
@@ -296,20 +316,21 @@ class HistoryMindApp {
         const container = document.querySelector('.container');
         container.innerHTML = `
             <header class="header">
-                <h1 class="site-title">AI for Historical Dataset Construction:<br>Patent Statistics of the German Empire (1877 - 1918)</h1>
+                <h1 class="site-title">Multimodal LLMs for Historical Dataset Construction from <span class="title-break">Archival Image Scans: German Patents (1877–1918)</span></h1>
+                <div class="site-authors">Niclas Griesshaber & Jochen Streb</div>
             </header>
             
-            <main class="main-content">
+            <main class="main-content fade-in">
                 <div class="content-page">
                     <div class="content-items">
                         <div class="content-item clickable" onclick="app.downloadCSV()">
-                            <span class="item-number-swapped">Download</span>
-                            <span class="item-text-swapped">CSV</span>
+                            <div class="item-number-swapped">Download</div>
+                            <div class="item-text-swapped">CSV</div>
                         </div>
                         
                         <div class="content-item clickable" onclick="app.downloadXLSX()">
-                            <span class="item-number-swapped">Download</span>
-                            <span class="item-text-swapped">XLSX</span>
+                            <div class="item-number-swapped">Download</div>
+                            <div class="item-text-swapped">XLSX</div>
                         </div>
                     </div>
                 </div>
@@ -320,17 +341,17 @@ class HistoryMindApp {
 
     showPatentExtractionPage() {
         // Update URL
-        window.history.pushState({page: 'patent-extraction'}, '', '/patent-entry-extraction.html');
-        
+        window.history.pushState({ page: 'patent-extraction' }, '', '/patent-entry-extraction.html');
+
         // Disable scrolling on patent extraction page
         this.setPageScrollable(false);
-        
+
         this.showPatentExtractionContent();
         // Reset scroll position immediately (handles mobile Safari)
         window.scrollTo(0, 0);
         document.documentElement.scrollTop = 0;
         document.body.scrollTop = 0;
-        
+
         // Force scroll reset on mobile
         setTimeout(() => {
             window.scrollTo(0, 0);
@@ -343,22 +364,23 @@ class HistoryMindApp {
         const container = document.querySelector('.container');
         container.innerHTML = `
             <header class="header">
-                <h1 class="site-title">AI for Historical Dataset Construction:<br>Patent Statistics of the German Empire (1877 - 1918)</h1>
+                <h1 class="site-title">Multimodal LLMs for Historical Dataset Construction from <span class="title-break">Archival Image Scans: German Patents (1877–1918)</span></h1>
+                <div class="site-authors">Niclas Griesshaber & Jochen Streb</div>
             </header>
             
-            <main class="main-content">
+            <main class="main-content fade-in">
                 <div class="content-page">
-                    <h2 class="content-title">Patent Entry Extraction based on Archival Image Scans</h2>
+                    <h2 class="content-title">Patent Entry Extraction based on Image Scans</h2>
                     
                     <div class="content-items">
                         <div class="content-item clickable" onclick="app.showPatentMatchingBefore()">
-                            <span class="item-number">a.</span>
-                            <span class="item-text">Patent Entry Matching before Repairing Page Breaks</span>
+                            <div class="item-number">a.</div>
+                            <div class="item-text">Patent Entry Matching before<span class="mobile-break"><br></span> Repairing Page Breaks</div>
                         </div>
                         
                         <div class="content-item clickable" onclick="app.showPatentMatchingAfter()">
-                            <span class="item-number">b.</span>
-                            <span class="item-text">Patent Entry Matching after Repairing Page Breaks</span>
+                            <div class="item-number">b.</div>
+                            <div class="item-text">Patent Entry Matching after<span class="mobile-break"><br></span> Repairing Page Breaks</div>
                         </div>
                     </div>
                 </div>
@@ -378,6 +400,17 @@ class HistoryMindApp {
 
     showPDFPreview(filename) {
         // Automatically open comparison view instead of just PDF preview
+        const year = filename.match(/Patentamt_(\d{4})_sampled\.pdf/)[1];
+        
+        // Check if we came from an individual year page and replace that history entry
+        const currentPath = window.location.pathname;
+        if (currentPath.startsWith('/sampled-pdfs/') && currentPath.match(/\/\d+\.html$/)) {
+            // We came from an individual year page, replace it in history
+            window.history.replaceState({ page: 'comparison', year: year }, '', `/comparison/${year}`);
+        } else {
+            // Otherwise, push a new state (e.g., coming from year tiles page)
+            window.history.pushState({ page: 'comparison', year: year }, '', `/comparison/${year}`);
+        }
         this.showComparison(filename);
     }
 
@@ -385,16 +418,20 @@ class HistoryMindApp {
         const currentIndex = this.pdfFiles.indexOf(filename);
         const prevFile = currentIndex > 0 ? this.pdfFiles[currentIndex - 1] : null;
         const nextFile = currentIndex < this.pdfFiles.length - 1 ? this.pdfFiles[currentIndex + 1] : null;
-        
+        const year = filename.match(/Patentamt_(\d{4})_sampled\.pdf/)[1];
+
+        // Update URL to reflect PDF-only view (replace comparison URL if applicable)
+        window.history.replaceState({ page: 'pdf', year: year }, '', `/sampled-pdfs/${year}.html`);
+
         // Disable scrolling on PDF-only view
         this.setPageScrollable(false);
-        
+
         const container = document.querySelector('.container');
         // Reset scroll position immediately (handles mobile Safari)
         window.scrollTo(0, 0);
         document.documentElement.scrollTop = 0;
         document.body.scrollTop = 0;
-        
+
         // Force scroll reset on mobile
         setTimeout(() => {
             window.scrollTo(0, 0);
@@ -418,11 +455,11 @@ class HistoryMindApp {
                     </div>
                     <div class="pdf-actions">
                         <button class="compare-btn" onclick="app.showComparison('${filename}')">Compare with LLM Transcriptions</button>
-                        <button class="back-btn" onclick="app.showSampledPDFs()">Back to PDFs</button>
+                        <button class="back-btn" onclick="window.location.replace('/sampled-pdfs.html')">Back to Home</button>
                     </div>
                 </div>
                 <div class="pdf-fullscreen-viewer">
-                    <iframe src="data/sampled_pdfs/${filename}?t=${Date.now()}#page=1&view=FitH&zoom=${this.isMobile ? '200' : '100'}&toolbar=1&navpanes=0&scrollbar=1" class="pdf-fullscreen-iframe" type="application/pdf"></iframe>
+                    <iframe src="/data/sampled_pdfs/${filename}?t=${Date.now()}#page=1&view=FitH&zoom=${this.isMobile ? '200' : '100'}&toolbar=1&navpanes=0&scrollbar=1" class="pdf-fullscreen-iframe" type="application/pdf"></iframe>
                 </div>
             </div>
         `;
@@ -432,51 +469,63 @@ class HistoryMindApp {
         const iframe = document.querySelector('.pdf-fullscreen-iframe');
         const filenameSpan = document.querySelector('.pdf-filename');
         const counterSpan = document.querySelector('.pdf-counter');
-        
+
         if (!iframe) return;
-        
+
         // Reset scroll position immediately (handles mobile Safari)
         window.scrollTo(0, 0);
         document.documentElement.scrollTop = 0;
         document.body.scrollTop = 0;
-        
+
         // Force scroll reset on mobile
         setTimeout(() => {
             window.scrollTo(0, 0);
             document.documentElement.scrollTop = 0;
             document.body.scrollTop = 0;
         }, 0);
-        
+
         // Start fade out
         iframe.style.opacity = '0';
         iframe.style.transition = 'opacity 0.2s ease';
-        
+
         setTimeout(() => {
-            // Update iframe source
-                iframe.src = `data/sampled_pdfs/${filename}?t=${Date.now()}#page=1&view=FitH&zoom=${this.isMobile ? '200' : '100'}&toolbar=1&navpanes=0&scrollbar=1`;
-            
+            // Update URL to reflect current PDF
+            const year = filename.match(/Patentamt_(\d{4})_sampled\.pdf/)[1];
+            window.history.replaceState({ page: 'pdf', year: year }, '', `/sampled-pdfs/${year}.html`);
+
+            // Update iframe source (use absolute path to work from any URL)
+            iframe.src = `/data/sampled_pdfs/${filename}?t=${Date.now()}#page=1&view=FitH&zoom=${this.isMobile ? '200' : '100'}&toolbar=1&navpanes=0&scrollbar=1`;
+
             // Update filename and counter
             const currentIndex = this.pdfFiles.indexOf(filename);
             filenameSpan.textContent = filename;
             counterSpan.textContent = `${currentIndex + 1} of ${this.pdfFiles.length}`;
-            
+
             // Update navigation buttons
             const prevFile = currentIndex > 0 ? this.pdfFiles[currentIndex - 1] : null;
             const nextFile = currentIndex < this.pdfFiles.length - 1 ? this.pdfFiles[currentIndex + 1] : null;
-            
-            const prevBtn = document.querySelector('.prev-btn');
-            const nextBtn = document.querySelector('.next-btn');
-            
+
+            const prevBtn = document.querySelector('.pdf-navigation .prev-btn');
+            const nextBtn = document.querySelector('.pdf-navigation .next-btn');
+
             if (prevBtn) {
                 prevBtn.disabled = !prevFile;
-                prevBtn.onclick = prevFile ? () => app.smoothTransition(prevFile) : null;
+                if (prevFile) {
+                    prevBtn.onclick = () => app.smoothTransition(prevFile);
+                } else {
+                    prevBtn.onclick = null;
+                }
             }
-            
+
             if (nextBtn) {
                 nextBtn.disabled = !nextFile;
-                nextBtn.onclick = nextFile ? () => app.smoothTransition(nextFile) : null;
+                if (nextFile) {
+                    nextBtn.onclick = () => app.smoothTransition(nextFile);
+                } else {
+                    nextBtn.onclick = null;
+                }
             }
-            
+
             // Fade back in
             setTimeout(() => {
                 iframe.style.opacity = '1';
@@ -488,7 +537,7 @@ class HistoryMindApp {
         const container = document.querySelector('.container');
         container.innerHTML = `
             <header class="header">
-                <h1 class="site-title">AI for Historical Dataset Construction:<br>Patent Statistics of the German Empire (1877 - 1918)</h1>
+                <h1 class="site-title">Multimodal LLMs for Historical Dataset Construction from <span class="title-break">Archival Image Scans: German Patents (1877–1918)</span></h1>
             </header>
             
             <main class="main-content">
@@ -508,35 +557,48 @@ class HistoryMindApp {
 
     async showComparison(filename) {
         const year = filename.match(/Patentamt_(\d{4})_sampled\.pdf/)[1];
-        
+
+        // Check if we came from an individual year page and replace that history entry
+        const currentPath = window.location.pathname;
+        if (currentPath.startsWith('/sampled-pdfs/') && currentPath.match(/\/\d+\.html$/)) {
+            // We came from an individual year page, replace it in history
+            window.history.replaceState({ page: 'comparison', year: year }, '', `/comparison/${year}`);
+        } else {
+            // Otherwise, push a new state (e.g., coming from year tiles page)
+            window.history.pushState({ page: 'comparison', year: year }, '', `/comparison/${year}`);
+        }
+
         // Disable scrolling on comparison view
         this.setPageScrollable(false);
-        
+
         // Reset scroll position immediately (handles mobile Safari)
         window.scrollTo(0, 0);
         document.documentElement.scrollTop = 0;
         document.body.scrollTop = 0;
-        
+
         // Force scroll reset on mobile
         setTimeout(() => {
             window.scrollTo(0, 0);
             document.documentElement.scrollTop = 0;
             document.body.scrollTop = 0;
         }, 0);
-        
+
         try {
-            // Fetch the character error rate HTML
-            const response = await fetch('data/character_error_rate.html');
+            // Fetch the character error rate HTML (use absolute path to work from any URL)
+            const response = await fetch('/data/character_error_rate.html');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const html = await response.text();
-            
+
             // Parse the HTML to extract the specific year's LLM transcription
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
-            
+
             // Find all sections with three-diff-section class
             const sections = doc.querySelectorAll('section.three-diff-section');
             let targetSection = null;
-            
+
             // Look for the section that matches our filename
             for (const section of sections) {
                 const heading = section.querySelector('h2.diff-file-heading');
@@ -545,7 +607,7 @@ class HistoryMindApp {
                     break;
                 }
             }
-            
+
             if (targetSection) {
                 // Extract only the LLM transcription part
                 const llmContainer = targetSection.querySelector('.text-container .llm-header');
@@ -554,7 +616,7 @@ class HistoryMindApp {
                     const llmContent = llmContainer.parentElement.querySelector('.text-content');
                     if (llmContent) {
                         // Create a clean LLM transcription display
-                        const llmData = this.createLLMTranscriptionDisplay(targetSection, llmContent.textContent);
+                        const llmData = this.createLLMTranscriptionDisplay(targetSection, llmContent);
                         this.showSideBySideComparison(filename, llmData);
                     } else {
                         alert(`No LLM transcription content found for ${filename}`);
@@ -571,7 +633,7 @@ class HistoryMindApp {
         }
     }
 
-    createLLMTranscriptionDisplay(section, llmContent) {
+    createLLMTranscriptionDisplay(section, llmContentElement) {
         // Extract the LLM transcription with original highlighting
         const llmContainer = section.querySelector('.text-container .llm-header');
         if (llmContainer) {
@@ -579,13 +641,13 @@ class HistoryMindApp {
             if (llmTextContainer) {
                 // Get the HTML content to preserve highlighting
                 let htmlContent = llmTextContainer.innerHTML;
-                
+
                 // Clean up the HTML but preserve highlighting and newlines
                 htmlContent = htmlContent.trim();
-                
+
                 // Remove any leading whitespace from the first line
                 htmlContent = htmlContent.replace(/^\s+/, '');
-                
+
                 // Return HTML with preserved highlighting and newlines
                 return `
                     <div class="llm-transcription-only" style="text-indent: 0 !important; margin: 0 !important; padding: 0.5rem !important; white-space: pre-wrap; font-family: 'Courier New', monospace; line-height: 1.6; text-align: left !important;">
@@ -594,11 +656,11 @@ class HistoryMindApp {
                 `;
             }
         }
-        
+
         // Fallback to plain text if highlighting not found
         return `
             <div class="llm-transcription-only" style="text-indent: 0 !important; margin: 0 !important; padding: 0.5rem !important; white-space: pre-wrap; font-family: 'Courier New', monospace; line-height: 1.6; text-align: left !important;">
-                ${llmContent}
+                ${llmContentElement ? llmContentElement.textContent : ''}
             </div>
         `;
     }
@@ -607,7 +669,7 @@ class HistoryMindApp {
         const currentIndex = this.pdfFiles.indexOf(filename);
         const prevFile = currentIndex > 0 ? this.pdfFiles[currentIndex - 1] : null;
         const nextFile = currentIndex < this.pdfFiles.length - 1 ? this.pdfFiles[currentIndex + 1] : null;
-        
+
         const container = document.querySelector('.container');
         container.innerHTML = `
             <div class="comparison-container">
@@ -626,16 +688,16 @@ class HistoryMindApp {
                     </div>
                     <div class="comparison-actions">
                         <button class="close-comparison-btn" onclick="app.showPDFOnly('${filename}')">Close Comparison</button>
-                        <button class="back-btn" onclick="app.showSampledPDFs()">Back to PDFs</button>
+                        <button class="back-btn" onclick="window.location.replace('/sampled-pdfs.html')">Back to Home</button>
                     </div>
                 </div>
                 <div class="comparison-content">
                     <div class="pdf-side">
                         <div class="pdf-side-header">
-                            <h3>PDF Preview</h3>
+                            <h3>PDF</h3>
                         </div>
                         <div class="pdf-side-content">
-                            <iframe src="data/sampled_pdfs/${filename}?t=${Date.now()}#page=1&view=FitH&zoom=${this.isMobile ? '200' : '100'}&toolbar=1&navpanes=0&scrollbar=1" class="comparison-pdf-iframe" type="application/pdf"></iframe>
+                            <iframe src="/data/sampled_pdfs/${filename}?t=${Date.now()}#page=1&view=FitH&zoom=${this.isMobile ? '200' : '100'}&toolbar=1&navpanes=0&scrollbar=1" class="comparison-pdf-iframe" type="application/pdf"></iframe>
                         </div>
                     </div>
                     <div class="llm-side">
@@ -648,7 +710,7 @@ class HistoryMindApp {
                             </div>
                         </div>
                         <div class="llm-side-content">
-                            <div class="llm-transcription-data">${llmData}</div>
+                            ${llmData}
                         </div>
                     </div>
                 </div>
@@ -657,68 +719,81 @@ class HistoryMindApp {
     }
 
     async smoothComparisonTransition(filename) {
+        const year = filename.match(/Patentamt_(\d{4})_sampled\.pdf/)[1];
+        
+        // Update URL
+        window.history.replaceState({ page: 'comparison', year: year }, '', `/comparison/${year}`);
+        
         const iframe = document.querySelector('.comparison-pdf-iframe');
-        const llmContent = document.querySelector('.llm-transcription-data');
+        const llmContent = document.querySelector('.llm-side-content');
         const filenameSpan = document.querySelector('.comparison-filename');
         const counterSpan = document.querySelector('.pdf-counter');
-        
+
         if (!iframe || !llmContent) return;
-        
+
         // Reset scroll position immediately (handles mobile Safari)
         window.scrollTo(0, 0);
         document.documentElement.scrollTop = 0;
         document.body.scrollTop = 0;
-        
+
         // Force scroll reset on mobile
         setTimeout(() => {
             window.scrollTo(0, 0);
             document.documentElement.scrollTop = 0;
             document.body.scrollTop = 0;
         }, 0);
-        
+
         // Start fade out
         iframe.style.opacity = '0';
         llmContent.style.opacity = '0';
         iframe.style.transition = 'opacity 0.2s ease';
         llmContent.style.transition = 'opacity 0.2s ease';
-        
+
         setTimeout(async () => {
             try {
-                // Update iframe source
-                iframe.src = `data/sampled_pdfs/${filename}?t=${Date.now()}#page=1&view=FitH&zoom=${this.isMobile ? '200' : '100'}&toolbar=1&navpanes=0&scrollbar=1`;
-                
+                // Update iframe source (use absolute path)
+                iframe.src = `/data/sampled_pdfs/${filename}?t=${Date.now()}#page=1&view=FitH&zoom=${this.isMobile ? '200' : '100'}&toolbar=1&navpanes=0&scrollbar=1`;
+
                 // Update filename and counter
                 const currentIndex = this.pdfFiles.indexOf(filename);
                 filenameSpan.textContent = filename;
                 counterSpan.textContent = `${currentIndex + 1} of ${this.pdfFiles.length}`;
-                
+
                 // Update navigation buttons
                 const prevFile = currentIndex > 0 ? this.pdfFiles[currentIndex - 1] : null;
                 const nextFile = currentIndex < this.pdfFiles.length - 1 ? this.pdfFiles[currentIndex + 1] : null;
-                
-                const prevBtn = document.querySelector('.prev-btn');
-                const nextBtn = document.querySelector('.next-btn');
-                
+
+                const prevBtn = document.querySelector('.comparison-navigation .prev-btn');
+                const nextBtn = document.querySelector('.comparison-navigation .next-btn');
+
                 if (prevBtn) {
                     prevBtn.disabled = !prevFile;
-                    prevBtn.onclick = prevFile ? () => app.smoothComparisonTransition(prevFile) : null;
+                    if (prevFile) {
+                        prevBtn.onclick = () => app.smoothComparisonTransition(prevFile);
+                    } else {
+                        prevBtn.onclick = null;
+                    }
                 }
-                
+
                 if (nextBtn) {
                     nextBtn.disabled = !nextFile;
-                    nextBtn.onclick = nextFile ? () => app.smoothComparisonTransition(nextFile) : null;
+                    if (nextFile) {
+                        nextBtn.onclick = () => app.smoothComparisonTransition(nextFile);
+                    } else {
+                        nextBtn.onclick = null;
+                    }
                 }
-                
+
                 // Load new LLM transcription data
                 const year = filename.match(/Patentamt_(\d{4})_sampled\.pdf/)[1];
-                const response = await fetch('data/character_error_rate.html');
+                const response = await fetch('/data/character_error_rate.html');
                 const html = await response.text();
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
-                
+
                 const sections = doc.querySelectorAll('section.three-diff-section');
                 let targetSection = null;
-                
+
                 for (const section of sections) {
                     const heading = section.querySelector('h2.diff-file-heading');
                     if (heading && heading.textContent.includes(filename)) {
@@ -726,27 +801,29 @@ class HistoryMindApp {
                         break;
                     }
                 }
-                
+
                 if (targetSection) {
                     const llmContainer = targetSection.querySelector('.text-container .llm-header');
                     if (llmContainer) {
                         const llmTextContainer = llmContainer.parentElement.querySelector('.text-content');
                         if (llmTextContainer) {
+                            let htmlContent = llmTextContainer.innerHTML.trim();
+                            htmlContent = htmlContent.replace(/^\s+/, '');
                             llmContent.innerHTML = `
-                                <div class="llm-transcription-only">
-                                    ${llmTextContainer.innerHTML}
+                                <div class="llm-transcription-only" style="text-indent: 0 !important; margin: 0 !important; padding: 0.5rem !important; white-space: pre-wrap; font-family: 'Courier New', monospace; line-height: 1.6; text-align: left !important;">
+                                    ${htmlContent}
                                 </div>
                             `;
                         }
                     }
                 }
-                
+
                 // Fade back in
                 setTimeout(() => {
                     iframe.style.opacity = '1';
                     llmContent.style.opacity = '1';
                 }, 100);
-                
+
             } catch (error) {
                 console.error('Error updating comparison:', error);
                 // Reset opacity even on error
@@ -759,7 +836,7 @@ class HistoryMindApp {
     increaseFontSize() {
         const transcriptionOnly = document.querySelector('.llm-transcription-only');
         const sizeDisplay = document.querySelector('.font-size-display');
-        
+
         if (transcriptionOnly && sizeDisplay) {
             const currentSize = parseInt(sizeDisplay.textContent);
             const newSize = Math.min(currentSize + 10, 150); // Max 150%
@@ -776,7 +853,7 @@ class HistoryMindApp {
     decreaseFontSize() {
         const transcriptionOnly = document.querySelector('.llm-transcription-only');
         const sizeDisplay = document.querySelector('.font-size-display');
-        
+
         if (transcriptionOnly && sizeDisplay) {
             const currentSize = parseInt(sizeDisplay.textContent);
             const newSize = Math.max(currentSize - 10, 70); // Min 70%
@@ -821,7 +898,7 @@ class HistoryMindApp {
 
             // Generate the zip file
             const zipBlob = await zip.generateAsync({ type: 'blob' });
-            
+
             // Create download link
             const link = document.createElement('a');
             link.href = URL.createObjectURL(zipBlob);
@@ -838,7 +915,7 @@ class HistoryMindApp {
         } catch (error) {
             console.error('Error creating zip file:', error);
             alert('Error creating zip file. Please try again or download individual PDFs.');
-            
+
             // Reset button
             const button = document.querySelector('.download-all-btn');
             button.textContent = 'Download All Sampled PDFs';
@@ -874,7 +951,7 @@ class HistoryMindApp {
             text-align: center;
             font-family: 'Inter', sans-serif;
         `;
-        
+
         warningBox.innerHTML = `
             <div style="color: #e53e3e; font-size: 18px; font-weight: 600; margin-bottom: 12px;">
                 ⚠️ Sample Data Warning
@@ -896,7 +973,7 @@ class HistoryMindApp {
                 I Understand
             </button>
         `;
-        
+
         // Add overlay
         const overlay = document.createElement('div');
         overlay.style.cssText = `
@@ -908,12 +985,12 @@ class HistoryMindApp {
             background: rgba(0, 0, 0, 0.5);
             z-index: 9999;
         `;
-        
+
         overlay.onclick = () => {
             warningBox.remove();
             overlay.remove();
         };
-        
+
         document.body.appendChild(overlay);
         document.body.appendChild(warningBox);
     }
@@ -921,7 +998,7 @@ class HistoryMindApp {
     downloadCSV() {
         // Show warning message
         this.showDownloadWarning();
-        
+
         // Create a sample CSV file
         const csvContent = `patent_number,year,title,applicant,location,status
 12345,1878,"Improved Steam Engine","Johann Schmidt","Berlin","Granted"
@@ -944,7 +1021,7 @@ class HistoryMindApp {
     downloadXLSX() {
         // Show warning message
         this.showDownloadWarning();
-        
+
         // Create a sample XLSX file (simplified version)
         const xlsxContent = `patent_number,year,title,applicant,location,status
 12345,1878,"Improved Steam Engine","Johann Schmidt","Berlin","Granted"
