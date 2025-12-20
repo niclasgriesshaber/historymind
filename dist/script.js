@@ -809,8 +809,13 @@ class HistoryMindApp {
                         if (llmTextContainer) {
                             let htmlContent = llmTextContainer.innerHTML.trim();
                             htmlContent = htmlContent.replace(/^\s+/, '');
+                            
+                            // Get current font size from display to apply to new content
+                            const sizeDisplay = document.querySelector('.font-size-display');
+                            const currentSize = sizeDisplay ? parseInt(sizeDisplay.textContent) : 100;
+                            
                             llmContent.innerHTML = `
-                                <div class="llm-transcription-only" style="text-indent: 0 !important; margin: 0 !important; padding: 0.5rem !important; white-space: pre-wrap; font-family: 'Courier New', monospace; line-height: 1.6; text-align: left !important;">
+                                <div class="llm-transcription-only" style="text-indent: 0 !important; margin: 0 !important; padding: 0.5rem !important; white-space: pre-wrap; font-family: 'Courier New', monospace; line-height: 1.6; text-align: left !important; font-size: ${currentSize}%;">
                                     ${htmlContent}
                                 </div>
                             `;
