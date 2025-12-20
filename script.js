@@ -110,6 +110,9 @@ class HistoryMindApp {
         } else if (path === '/patent-entry-extraction.html') {
             this.setPageScrollable(false); // Disable scrolling on patent extraction page
             this.showPatentExtractionContent();
+        } else if (path === '/variable-extraction.html') {
+            this.setPageScrollable(false); // Disable scrolling on variable extraction page
+            this.showVariableExtractionContent();
         } else if (path.startsWith('/comparison/')) {
             this.setPageScrollable(false); // Disable scrolling on comparison pages
             const year = path.match(/\/comparison\/(\d+)/)[1];
@@ -280,7 +283,61 @@ class HistoryMindApp {
     }
 
     showVariableExtractionPage() {
+        // Update URL
+        window.history.pushState({ page: 'variable-extraction' }, '', '/variable-extraction.html');
+
+        // Disable scrolling on variable extraction page
+        this.setPageScrollable(false);
+
+        this.showVariableExtractionContent();
+        // Reset scroll position immediately (handles mobile Safari)
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+
+        // Force scroll reset on mobile
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+        }, 0);
+    }
+
+    showVariableExtractionContent() {
+        const container = document.querySelector('.container');
+        container.innerHTML = `
+            <header class="header">
+                <h1 class="site-title">Multimodal LLMs for Historical Dataset Construction from <span class="title-break">Archival Image Scans: German Patents (1877–1918)</span></h1>
+                <div class="site-authors">Niclas Griesshaber & Jochen Streb</div>
+            </header>
+            
+            <main class="main-content fade-in">
+                <div class="content-page">
+                    <h2 class="content-title">Variable Extraction based on extracted Patent Entries</h2>
+                    <p class="content-subtitle">Stage II Benchmarking Results (Table 2)</p>
+                    
+                    <div class="content-items">
+                        <div class="content-item clickable" onclick="app.showLLMVariableExtraction()">
+                            <div class="item-number">a.</div>
+                            <div class="item-text">LLM-generated Variable<span class="mobile-break"><br></span> Extraction</div>
+                        </div>
+                        
+                        <div class="content-item clickable" onclick="app.showStudentVariableExtraction()">
+                            <div class="item-number">b.</div>
+                            <div class="item-text">Student-constructed Variable<span class="mobile-break"><br></span> Extraction</div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        `;
+    }
+
+    showLLMVariableExtraction() {
         window.location.href = 'data/variable_extraction_report.html';
+    }
+
+    showStudentVariableExtraction() {
+        window.location.href = 'data/student-constructed/variable_extraction_report.html';
     }
 
     showPatentMatchingBefore() {
