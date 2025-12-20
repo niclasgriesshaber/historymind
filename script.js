@@ -291,6 +291,10 @@ class HistoryMindApp {
         window.location.href = 'data/patent_entry_matching_after_cleaning.html';
     }
 
+    showStudentPatentMatching() {
+        window.location.href = 'data/student-constructed/patent_entry_matching.html';
+    }
+
     showFullDatasetOptions() {
         // Update URL
         window.history.pushState({ page: 'full-dataset' }, '', '/full-dataset.html');
@@ -371,6 +375,7 @@ class HistoryMindApp {
             <main class="main-content fade-in">
                 <div class="content-page">
                     <h2 class="content-title">Patent Entry Extraction based on Image Scans</h2>
+                    <p class="content-subtitle">Stage I Benchmarking Results (Table 1)</p>
                     
                     <div class="content-items">
                         <div class="content-item clickable" onclick="app.showPatentMatchingBefore()">
@@ -381,6 +386,11 @@ class HistoryMindApp {
                         <div class="content-item clickable" onclick="app.showPatentMatchingAfter()">
                             <div class="item-number">b.</div>
                             <div class="item-text">Patent Entry Matching after<span class="mobile-break"><br></span> Repairing Page Breaks</div>
+                        </div>
+                        
+                        <div class="content-item clickable" onclick="app.showStudentPatentMatching()">
+                            <div class="item-number">c.</div>
+                            <div class="item-text">Student-constructed Patent Entry<span class="mobile-break"><br></span> Matching</div>
                         </div>
                     </div>
                 </div>
