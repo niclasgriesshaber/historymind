@@ -384,15 +384,15 @@ class HistoryMindApp {
             <main class="main-content fade-in">
                 <div class="content-page">
                     <div class="content-items">
-                        <div class="content-item clickable" onclick="app.downloadCSV()">
+                        <a href="data/dataset/german-patents-1877-1918.csv" download class="content-item clickable">
                             <div class="item-number-swapped">Download</div>
                             <div class="item-text-swapped">CSV</div>
-                        </div>
+                        </a>
                         
-                        <div class="content-item clickable" onclick="app.downloadXLSX()">
+                        <a href="data/dataset/german-patents-1877-1918.xlsx" download class="content-item clickable">
                             <div class="item-number-swapped">Download</div>
                             <div class="item-text-swapped">XLSX</div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </main>
