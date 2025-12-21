@@ -10,7 +10,12 @@
     "build": "node build.js",
     "deploy": "npm run build && gh-pages -d dist"
   },
-  "keywords": ["history", "economics", "research", "papers"],
+  "keywords": [
+    "history",
+    "economics",
+    "research",
+    "papers"
+  ],
   "author": "HistoryMind",
   "license": "MIT"
 }

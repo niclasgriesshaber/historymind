@@ -1009,114 +1009,24 @@ class HistoryMindApp {
         });
     }
 
-    showDownloadWarning() {
-        // Create warning box
-        const warningBox = document.createElement('div');
-        warningBox.style.cssText = `
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            border: 2px solid #e53e3e;
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-            z-index: 10000;
-            max-width: 400px;
-            text-align: center;
-            font-family: 'Inter', sans-serif;
-        `;
-
-        warningBox.innerHTML = `
-            <div style="color: #e53e3e; font-size: 18px; font-weight: 600; margin-bottom: 12px;">
-                ⚠️ Sample Data Warning
-            </div>
-            <div style="color: #4a5568; font-size: 14px; line-height: 1.5; margin-bottom: 20px;">
-                This is only a sample file and not the real dataset. The actual dataset will be available in the published research paper.
-            </div>
-            <button onclick="this.parentElement.remove()" style="
-                background: #e53e3e;
-                color: white;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 6px;
-                font-size: 14px;
-                font-weight: 500;
-                cursor: pointer;
-                transition: background 0.2s;
-            " onmouseover="this.style.background='#c53030'" onmouseout="this.style.background='#e53e3e'">
-                I Understand
-            </button>
-        `;
-
-        // Add overlay
-        const overlay = document.createElement('div');
-        overlay.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 9999;
-        `;
-
-        overlay.onclick = () => {
-            warningBox.remove();
-            overlay.remove();
-        };
-
-        document.body.appendChild(overlay);
-        document.body.appendChild(warningBox);
-    }
-
     downloadCSV() {
-        // Show warning message
-        this.showDownloadWarning();
-
-        // Create a sample CSV file
-        const csvContent = `patent_number,year,title,applicant,location,status
-12345,1878,"Improved Steam Engine","Johann Schmidt","Berlin","Granted"
-12346,1878,"Textile Machine","Maria Weber","Hamburg","Granted"
-12347,1879,"Chemical Process","Friedrich Mueller","Munich","Pending"
-12348,1879,"Mechanical Device","Anna Schmidt","Cologne","Granted"
-12349,1880,"Electrical Apparatus","Karl Wagner","Frankfurt","Granted"`;
-
-        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-        const url = URL.createObjectURL(blob);
+        const url = 'data/dataset/german-patents-1877-1918.csv';
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'imperial-patents.csv';
+        a.download = 'german-patents-1877-1918.csv';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        URL.revokeObjectURL(url);
     }
 
     downloadXLSX() {
-        // Show warning message
-        this.showDownloadWarning();
-
-        // Create a sample XLSX file (simplified version)
-        const xlsxContent = `patent_number,year,title,applicant,location,status
-12345,1878,"Improved Steam Engine","Johann Schmidt","Berlin","Granted"
-12346,1878,"Textile Machine","Maria Weber","Hamburg","Granted"
-12347,1879,"Chemical Process","Friedrich Mueller","Munich","Pending"
-12348,1879,"Mechanical Device","Anna Schmidt","Cologne","Granted"
-12349,1880,"Electrical Apparatus","Karl Wagner","Frankfurt","Granted"`;
-
-        // For XLSX, we'll create a CSV file with .xlsx extension
-        // In a real implementation, you'd use a library like SheetJS
-        const blob = new Blob([xlsxContent], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-        const url = URL.createObjectURL(blob);
+        const url = 'data/dataset/german-patents-1877-1918.xlsx';
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'imperial-patents.xlsx';
+        a.download = 'german-patents-1877-1918.xlsx';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        URL.revokeObjectURL(url);
     }
 }
 
