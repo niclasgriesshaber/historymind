@@ -32,6 +32,11 @@
     box-sizing: border-box;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
 body {
     font-family: var(--font-sans);
     line-height: 1.6;
@@ -176,6 +181,7 @@ body.scrollable {
     overflow: hidden;
     cursor: pointer;
     gap: 1.5rem;
+    text-decoration: none; /* Remove default link underlining */
 }
 
 /* Download buttons specific styling - space between Download and CSV/XLSX */
@@ -261,6 +267,7 @@ body.scrollable {
     transition: all 0.3s ease;
     cursor: pointer;
     color: white;
+    text-decoration: none; /* Remove default link underlining */
 }
 
 .dataset-item:hover {
